@@ -1,7 +1,11 @@
 
 package servlet;
 
+import gear.GearDAO;
+import generated.gear.Gear;
 import java.io.IOException;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +16,21 @@ public class SearchServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        String url = "search.jsp";
         
+        try {
+            GearDAO dao = new GearDAO();
+            List<Gear> gears = dao.getAllGear("all");
+            
+            if (gears != null) {
+                request.setAttribute("GEARS", gears);
+            }
+            
+        } catch (Exception ex) {
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+        }
         
     }
 
