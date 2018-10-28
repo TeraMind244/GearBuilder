@@ -1,54 +1,32 @@
 
 package servlet;
 
-import gear.GearDAO;
-import gear.GearFilter;
-import generated.gear.Gear;
 import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import util.PathLookup;
 
-public class SearchServlet extends HttpServlet {
+public class OrderServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         
-        String url = "search.jsp";
+        String url = PathLookup.SEARCH_SERVLET;
+        String action = request.getParameter("btAction");
         
-        String nameParam = request.getParameter("txtGearName");
-        String typeParam = request.getParameter("ddlType");
-        String sortByParam = request.getParameter("ddlSortBy");
-        
-        try {
-            String name = nameParam == null ? "" : nameParam.trim();
-            String type = typeParam == null ? "all" : typeParam;
-            String sortBy = sortByParam == null ? "" : sortByParam;
-
-            GearFilter filter = new GearFilter(name, type, sortBy);
-            
-            GearDAO dao = new GearDAO();
-            List<Gear> gears = dao.getAllGear(filter);
-            
-            if (gears != null) {
-                int gearCount = gears.size();
-                request.setAttribute("GEARS", gears);
-                request.setAttribute("GEARCOUNT", gearCount);
+        if (action != null) {
+            switch (action) {
+                case "search":
+                    url = PathLookup.SEARCH_SERVLET;
+                    break;
             }
-            
-        } catch (Exception ex) {
-            Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
         }
         
+        RequestDispatcher rd = request.getRequestDispatcher(url);
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -42,10 +42,10 @@ public class GearDAO implements Serializable {
         Gear gear = getGearByHashStr(newGear.getHashStr());
         if (gear == null) {
             addGear(newGear);
-            System.out.println("Add gear: " + newGear.getGearName());
+            System.out.println("Add " + newGear.getType() + ": " + newGear.getGearName());
         } else {
             updateGear(newGear);
-            System.out.println("Update gear: " + newGear.getGearName());
+            System.out.println("Update " + newGear.getType() + ": " + newGear.getGearName());
         }
     }
     
@@ -91,7 +91,12 @@ public class GearDAO implements Serializable {
         try {
             beginTransaction();
             session.getTransaction().begin();
-            session.update(gear);
+            Gear oldGear = (Gear) session.get(Gear.class, gear.getHashStr());
+            oldGear.setGearUrl(gear.getGearUrl());
+            oldGear.setImgUrl(gear.getImgUrl());
+            oldGear.setPrice(gear.getPrice());
+            oldGear.setType(gear.getType());
+            session.update(oldGear);
             session.flush();
             session.getTransaction().commit();
         } catch (HibernateException ex) {
@@ -104,16 +109,25 @@ public class GearDAO implements Serializable {
         }
     }
     
-    public List<Gear> getAllGear(String type) {
+    public List<Gear> getAllGear(GearFilter filter) {
         List<Gear> gears = null;
         try {
             beginTransaction();
             session.getTransaction().begin();
-            String sql = "FROM Gear" + (type.equals("all") ? "" : " WHERE Type = :type");
+            String sql = "FROM Gear " + filter.getQueryStatement();
             Query query = session.createQuery(sql);
+            
+            String name = filter.getName();
+            String type = filter.getType();
+            
+            if (!name.isEmpty()) {
+                query.setParameter("name", "%" + name + "%");
+            }
+
             if (!type.equals("all")) {
                 query.setParameter("type", type);
             }
+            
             gears = query.list();
             session.flush();
             session.getTransaction().commit();

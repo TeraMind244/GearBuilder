@@ -1,6 +1,7 @@
 package generated.gear;
 
 import java.io.Serializable;
+import util.GearUtil;
 
 public class Gear implements Serializable {
 
@@ -83,6 +84,10 @@ public class Gear implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+    
+    public String getViewPrice() {
+        return GearUtil.getViewPrice(this.price);
     }
 
 }
