@@ -1,3 +1,11 @@
 .input {
     width: 200px;
 }
+
+.width-150 {
+    width: 150px;
+}
+
+body {
+    padding-left: 50px;
+}

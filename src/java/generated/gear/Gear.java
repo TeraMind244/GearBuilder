@@ -89,5 +89,20 @@ public class Gear implements Serializable {
     public String getViewPrice() {
         return GearUtil.getViewPrice(this.price);
     }
+    
+    public String getViewType() {
+        switch (type) {
+            case "chuot":
+                return "Chuột";
+            case "ban-phim":
+                return "Bàn Phím";
+            case "pad":
+                return "Pad Chuột";
+            case "tai-nghe":
+                return "Tai nghe";
+            default:
+                return "Khác";
+        }
+    }
 
 }

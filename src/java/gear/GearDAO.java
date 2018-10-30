@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import util.AppConstant;
 
 public class GearDAO implements Serializable {
     
@@ -109,8 +110,9 @@ public class GearDAO implements Serializable {
         }
     }
     
-    public List<Gear> getAllGear(GearFilter filter) {
-        List<Gear> gears = null;
+    public SearchGearView getAllGear(GearFilter filter, int page) {
+        SearchGearView searchGearView = new SearchGearView();
+        searchGearView.setCurrentPage(page);
         try {
             beginTransaction();
             session.getTransaction().begin();
@@ -127,8 +129,12 @@ public class GearDAO implements Serializable {
             if (!type.equals("all")) {
                 query.setParameter("type", type);
             }
+            searchGearView.setResultCount(query.list().size());
             
-            gears = query.list();
+            query.setFirstResult(page * AppConstant.pageSize);
+            query.setMaxResults(AppConstant.pageSize);
+            
+            searchGearView.setGears(query.list());
             session.flush();
             session.getTransaction().commit();
         } catch (HibernateException ex) {
@@ -136,10 +142,8 @@ public class GearDAO implements Serializable {
                 session.getTransaction().rollback();
             }
             Logger.getLogger(GearDAO.class.getName()).log(Level.SEVERE, "Get Gear ERROR", ex);
-        } catch (Exception ex) {
-            
         }
-        return gears;
+        return searchGearView;
     }
     
 }

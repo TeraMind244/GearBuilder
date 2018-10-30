@@ -7,6 +7,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/search.css" />
         <title>Search Page</title>
+        
+        <script>
+            var currentPage = ${requestScope.PAGE};
+        </script>
+        
     </head>
     <body>
         <h1>Search Page</h1>
@@ -22,28 +27,62 @@
                 <tr>
                     <td>Loại: </td>
                     <td>
-                        <select name="ddlType" class="input" >
+                        <select name="ddlType" class="input" value="${param.ddlType}" >
                             <option value="all">Tất cả</option>
-                            <option value="chuot">Chuột</option>
-                            <option value="ban-phim">Bàn Phím</option>
-                            <option value="tai-nghe">Tai Nghe</option>
-                            <option value="pad">Pad Chuột</option>
+                            <option value="chuot"
+                                    <c:if test="${param.ddlType == 'chuot'}">
+                                        selected
+                                    </c:if>
+                                    >Chuột</option>
+                            <option value="ban-phim"
+                                    <c:if test="${param.ddlType == 'ban-phim'}">
+                                        selected
+                                    </c:if>
+                                    >Bàn Phím</option>
+                            <option value="tai-nghe"
+                                    <c:if test="${param.ddlType == 'tai-nghe'}">
+                                        selected
+                                    </c:if>
+                                    >Tai Nghe</option>
+                            <option value="pad"
+                                    <c:if test="${param.ddlType == 'pad'}">
+                                        selected
+                                    </c:if>
+                                    >Pad Chuột</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td>Sắp xếp: </td>
                     <td>
-                        <select name="ddlSortBy" class="input" >
-                            <option value="nameAsc">Tên (Tăng)</option>
-                            <option value="nameDesc">Tên (Giảm)</option>
-                            <option value="priceAsc">Giá (Tăng)</option>
-                            <option value="priceDesc">Giá (Giảm)</option>
+                        <select name="ddlSortBy" class="input" value="${param.ddlSortBy}" >
+                            <option value="nameAsc"
+                                    <c:if test="${param.ddlSortBy == 'nameAsc'}">
+                                        selected
+                                    </c:if>
+                                    >Tên (Tăng)</option>
+                            <option value="nameDesc"
+                                    <c:if test="${param.ddlSortBy == 'nameDesc'}">
+                                        selected
+                                    </c:if>
+                                        >Tên (Giảm)</option>
+                            <option value="priceAsc"
+                                    <c:if test="${param.ddlSortBy == 'priceAsc'}">
+                                        selected
+                                    </c:if>
+                                    >Giá (Tăng)</option>
+                            <option value="priceDesc"
+                                    <c:if test="${param.ddlSortBy == 'priceDesc'}">
+                                        selected
+                                    </c:if>
+                                    >Giá (Giảm)</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <td></td>
+                    <td>
+                        <button type="reset">Reset</button>
+                    </td>
                     <td>
                         <button type="submit" name="btAction" value="search">Search</button>
                     </td>
@@ -51,12 +90,28 @@
             </table>
         </form>
         
+        <c:set var="maxPage" value="${requestScope.MAXPAGE}" />
+        <c:set var="page" value="${requestScope.PAGE}" />
         <c:set var="gears" value="${requestScope.GEARS}" />
         <c:if test="${not empty gears}" >
             <h2>Tìm thấy ${requestScope.GEARCOUNT} Gear</h2>
+            
+            <button id="btnPrev" onclick="gotoPage(${requestScope.PAGE - 1})"
+                    <c:if test="${page eq 0}" >
+                        disabled
+                    </c:if>
+                    >&lt;</button>
+            <button id="btnCurrent">${page}</button>
+            <button id="btnNext" onclick="gotoPage(${requestScope.PAGE + 1})"
+                    <c:if test="${page eq maxPage}" >
+                        disabled
+                    </c:if>
+                    >&gt;</button>
+            
             <table border="1">
                 <thead>
                     <tr>
+                        <th>Image</th>
                         <th>Name</th>
                         <th>Source</th>
                         <th>Price</th>
@@ -67,11 +122,16 @@
                     <c:forEach var="gear" items="${gears}" >
                         <tr>
                             <td>
+                                <a href="${gear.gearUrl}" target="_blank">
+                                    <img src="${gear.imgUrl}" class="width-150" />
+                                </a>
+                            </td>
+                            <td>
                                 <a href="${gear.gearUrl}" target="_blank">${gear.gearName}</a>
                             </td>
                             <td>${gear.source}</td>
                             <td>${gear.getViewPrice()}</td>
-                            <td>${gear.type}</td>
+                            <td>${gear.getViewType()}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -79,8 +139,8 @@
         </c:if>
         
         <c:if test="${empty gears}" >
-            <h3>There is no gear available currently! Please narrow down your search criteria!</h3>
+            <h3>No Gear's found! Please narrow down your search criteria!</h3>
         </c:if>
-        
+        <script type="text/javascript" src="js/search.js"></script>
     </body>
 </html>

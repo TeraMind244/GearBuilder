@@ -3,6 +3,7 @@ package servlet;
 
 import gear.GearDAO;
 import gear.GearFilter;
+import gear.SearchGearView;
 import generated.gear.Gear;
 import java.io.IOException;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import util.PathLookup;
 
 public class SearchServlet extends HttpServlet {
 
@@ -20,28 +22,30 @@ public class SearchServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         
-        String url = "search.jsp";
+        String url = PathLookup.SEARCH_PAGE;
         
         String nameParam = request.getParameter("txtGearName");
         String typeParam = request.getParameter("ddlType");
         String sortByParam = request.getParameter("ddlSortBy");
+        String pageParam = request.getParameter("page");
         
         try {
             String name = nameParam == null ? "" : nameParam.trim();
             String type = typeParam == null ? "all" : typeParam;
             String sortBy = sortByParam == null ? "" : sortByParam;
+            int page = pageParam == null ? 0 : Integer.parseInt(pageParam.trim());
 
             GearFilter filter = new GearFilter(name, type, sortBy);
             
             GearDAO dao = new GearDAO();
-            List<Gear> gears = dao.getAllGear(filter);
+            SearchGearView gearsView = dao.getAllGear(filter, page);
             
-            if (gears != null) {
-                int gearCount = gears.size();
-                request.setAttribute("GEARS", gears);
-                request.setAttribute("GEARCOUNT", gearCount);
+            if (gearsView.getGears() != null) {
+                request.setAttribute("GEARS", gearsView.getGears());
+                request.setAttribute("GEARCOUNT", gearsView.getResultCount());
+                request.setAttribute("PAGE", page);
+                request.setAttribute("MAXPAGE", gearsView.getMaxPage());
             }
-            
         } catch (Exception ex) {
             Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
