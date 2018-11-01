@@ -10,8 +10,8 @@
     </head>
     <body>
         <h1>Gear Builder</h1>
-        
-        <form action="OrderServlet">
+        <a href="SearchServlet">Back to search page!</a>
+        <form action="OrderServlet" method="GET">
             Số tiền: <input type="number" name="txtMoney" value="${param.txtMoney}" />
             <button name="btAction" value="build" >Build</button>
         </form>

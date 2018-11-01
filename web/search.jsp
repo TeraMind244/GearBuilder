@@ -103,7 +103,7 @@
                         disabled
                     </c:if>
                     >&lt;</button>
-            <button id="btnCurrent">${page}</button>
+            <button id="btnCurrent">${page + 1}</button>
             <button id="btnNext" onclick="gotoPage(${requestScope.PAGE + 1})"
                     <c:if test="${page eq maxPage}" >
                         disabled
@@ -138,6 +138,17 @@
                     </c:forEach>
                 </tbody>
             </table>
+            <button id="btnPrev" onclick="gotoPage(${requestScope.PAGE - 1})"
+                    <c:if test="${page eq 0}" >
+                        disabled
+                    </c:if>
+            >&lt;</button>
+            <button id="btnCurrent">${page + 1}</button>
+            <button id="btnNext" onclick="gotoPage(${requestScope.PAGE + 1})"
+                    <c:if test="${page eq maxPage}" >
+                        disabled
+                    </c:if>
+            >&gt;</button>
         </c:if>
         
         <c:if test="${empty gears}" >

@@ -9,7 +9,7 @@ function getAllParamSearch() {
 }
 
 function gotoPage(page) {
-    location.href = getAllParamSearch() + "&page=" + page;
+    location.href = "SearchServlet" + getAllParamSearch() + "&page=" + page;
 }
 
 function getUrlParam(param) {
