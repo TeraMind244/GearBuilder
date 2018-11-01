@@ -92,7 +92,8 @@ public class CrawlerUtil {
         
         gearName = toRawString(gearName.toLowerCase());
 
-        if (gearName.contains("pad") || gearName.contains("lot chuot") || gearName.contains("ban di")) {
+        if ((gearName.contains("pad") || gearName.contains("lot chuot") || gearName.contains("ban di")) 
+                && !gearName.contains("tang") && !gearName.contains("gamepad")) {
             return pad;
         }
         if (gearName.contains("ban phim")) {

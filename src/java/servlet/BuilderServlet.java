@@ -6,6 +6,7 @@ import gear.GearSet;
 import generated.gear.Gear;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,8 +32,8 @@ public class BuilderServlet extends HttpServlet {
 
             int mousePercentage = 35 * money / 100;
             int keyBoardPercentage = 35 * money / 100;
-            int padPercentage = 10 * money / 100;
-            int headsetPercentage = 20 * money / 100;
+            int padPercentage = 5 * money / 100;
+            int headsetPercentage = 25 * money / 100;
             
             int minMoney = (int)Math.floor(money * 0.98);
             
@@ -54,9 +55,9 @@ public class BuilderServlet extends HttpServlet {
                     for (Gear keyBoard : listKeyBoard) {
                         for (Gear pad : listPad) {
                             for (Gear headset : listHeadset) {
-                                if (listGearSets.size() >= 50) {
-                                    break;
-                                }
+//                                if (listGearSets.size() >= 50) {
+//                                    break;
+//                                }
                                 int value = mouse.getPrice() 
                                         + pad.getPrice() 
                                         + keyBoard.getPrice() 
@@ -72,10 +73,11 @@ public class BuilderServlet extends HttpServlet {
                     listGearSets.sort(new Comparator<GearSet>() {
                         @Override
                         public int compare(GearSet o1, GearSet o2) {
-                            return o2.getValue() - o1.getValue();
+                            return o1.getValue() - o2.getValue();
                         }
                     });
-                    request.setAttribute("GEARSETS", listGearSets);
+                    Collections.reverse(listGearSets);
+                    request.setAttribute("GEARSETS", listGearSets.subList(0, 50));
                 }
             }
         } catch (Exception ex) {

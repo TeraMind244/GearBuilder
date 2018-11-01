@@ -45,6 +45,8 @@
                                     </a>
                                     <br/>
                                     ${gearset.mouse.getViewPrice()}
+                                    <br/>
+                                    <a href="//TODO" >Change this gear!</a>
                                 </td>
                                 <td>
                                     <a href="${gearset.keyBoard.gearUrl}" target="_blank">
@@ -54,6 +56,8 @@
                                     </a>
                                     <br/>
                                     ${gearset.keyBoard.getViewPrice()}
+                                    <br/>
+                                    <a href="//TODO" >Change this gear!</a>
                                 </td>
                                 <td>
                                     <a href="${gearset.pad.gearUrl}" target="_blank">
@@ -63,6 +67,8 @@
                                     </a>
                                     <br/>
                                     ${gearset.pad.getViewPrice()}
+                                    <br/>
+                                    <a href="//TODO" >Change this gear!</a>
                                 </td>
                                 <td>
                                     <a href="${gearset.headset.gearUrl}" target="_blank">
@@ -72,6 +78,8 @@
                                     </a>
                                     <br/>
                                     ${gearset.headset.getViewPrice()}
+                                    <br/>
+                                    <a href="//TODO" >Change this gear!</a>
                                 </td>
                                 <td>
                                     ${gearset.getViewValue()}
