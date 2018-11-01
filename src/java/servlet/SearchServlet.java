@@ -37,14 +37,16 @@ public class SearchServlet extends HttpServlet {
 
             GearFilter filter = new GearFilter(name, type, sortBy);
             
-            GearDAO dao = new GearDAO();
-            SearchGearView gearsView = dao.getAllGear(filter, page);
-            
-            if (gearsView.getGears() != null) {
-                request.setAttribute("GEARS", gearsView.getGears());
-                request.setAttribute("GEARCOUNT", gearsView.getResultCount());
-                request.setAttribute("PAGE", page);
-                request.setAttribute("MAXPAGE", gearsView.getMaxPage());
+            if (page >= 0) {
+                GearDAO dao = new GearDAO();
+                SearchGearView gearsView = dao.getAllGear(filter, page);
+
+                if (gearsView.getGears() != null) {
+                    request.setAttribute("GEARS", gearsView.getGears());
+                    request.setAttribute("GEARCOUNT", gearsView.getResultCount());
+                    request.setAttribute("PAGE", page);
+                    request.setAttribute("MAXPAGE", gearsView.getMaxPage());
+                }
             }
         } catch (Exception ex) {
             Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);

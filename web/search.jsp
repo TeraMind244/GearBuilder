@@ -89,10 +89,12 @@
                 </tr>
             </table>
         </form>
+        <a href="builder.jsp" >Build bộ Gear của riêng bạn!</a>
         
         <c:set var="maxPage" value="${requestScope.MAXPAGE}" />
         <c:set var="page" value="${requestScope.PAGE}" />
         <c:set var="gears" value="${requestScope.GEARS}" />
+        
         <c:if test="${not empty gears}" >
             <h2>Tìm thấy ${requestScope.GEARCOUNT} Gear</h2>
             
@@ -139,7 +141,7 @@
         </c:if>
         
         <c:if test="${empty gears}" >
-            <h3>No Gear's found! Please narrow down your search criteria!</h3>
+            <h3>No Gear's found! Please narrow down your search criteria!</h3>//TODO
         </c:if>
         <script type="text/javascript" src="js/search.js"></script>
     </body>

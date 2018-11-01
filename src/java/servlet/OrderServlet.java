@@ -14,13 +14,17 @@ public class OrderServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String url = PathLookup.SEARCH_SERVLET;
+//        String url = PathLookup.SEARCH_SERVLET;
+        String url = PathLookup.BUILDER_PAGE;
         String action = request.getParameter("btAction");
         
         if (action != null) {
             switch (action) {
                 case "search":
                     url = PathLookup.SEARCH_SERVLET;
+                    break;
+                case "build":
+                    url = PathLookup.BUILDER_SERVLET;
                     break;
             }
         }
