@@ -1,15 +1,18 @@
 var btnPrev = document.getElementById("btnPrev");
 var btnNext = document.getElementById("btnNext");
 
-function getAllParamSearch() {
-    var txtName = document.getElementsByName("txtGearName")[0].value.trim();
-    var ddlType = document.getElementsByName("ddlType")[0].value;
-    var ddlSortBy = document.getElementsByName("ddlSortBy")[0].value;
-    return "?txtGearName=" + txtName + "&ddlType=" + ddlType + "&ddlSortBy=" + ddlSortBy;
-}
-
 function gotoPage(page) {
-    location.href = "SearchServlet" + getAllParamSearch() + "&page=" + page;
+    var url = "?";
+    if (txtGearName) {
+        url += "txtGearName=" + txtGearName;
+    }
+    if (ddlType) {
+        url += "ddlType=" + ddlType;
+    }
+    if (ddlSortBy) {
+        url += "ddlSortBy=" + ddlSortBy;
+    }
+    location.href = "SearchServlet" + url + (url.length > 1 ? "&" : "") + "page=" + page;
 }
 
 function getUrlParam(param) {

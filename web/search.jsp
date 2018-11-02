@@ -7,11 +7,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/search.css" />
         <title>Search Page</title>
-        
         <script>
             var currentPage = ${requestScope.PAGE};
+            var txtGearName = "${param.txtGearName}";
+            var ddlType = "${param.ddlType}";
+            var ddlSortBy = "${param.ddlSortBy}";
         </script>
-        
     </head>
     <body>
         <h1>Search Page</h1>
