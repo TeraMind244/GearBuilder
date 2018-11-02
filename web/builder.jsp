@@ -90,7 +90,7 @@
                 </table>
             </c:if>
             <c:if test="${empty gearsets}" >
-                <h3>No gear set found with your price!</h3>//TODO
+                <h3>Không tìm thấy Gear nào!</h3>
             </c:if>
         </c:if>
     </body>

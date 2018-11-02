@@ -153,7 +153,7 @@
         </c:if>
         
         <c:if test="${empty gears}" >
-            <h3>No Gear's found! Please narrow down your search criteria!</h3>//TODO
+            <h3>Không tìm thấy Gear nào!</h3>
         </c:if>
         <script type="text/javascript" src="js/search.js"></script>
     </body>
