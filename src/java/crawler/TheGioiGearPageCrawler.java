@@ -7,7 +7,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletContext;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
@@ -21,8 +20,7 @@ public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
     private String url;
     private int lastPage;
     
-    public TheGioiGearPageCrawler(ServletContext context, String url) {
-        super(context);
+    public TheGioiGearPageCrawler(String url) {
         this.url = url;
     }
     
@@ -31,7 +29,7 @@ public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
         try {
             reader = getBufferReaderForURL(url);
             String line = "";
-            String document = "";
+            StringBuilder document = new StringBuilder("");
             boolean isStart = false;
             while ((line = reader.readLine()) != null) {
                 if (line.contains("<div class=\"col-lg-8 col-md-8 col-sm-6 col-xs-12 text-center\">")) {
@@ -42,10 +40,10 @@ public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
                 }
                 if (isStart) {
 //                    System.out.println(line);
-                    document += line.trim();
+                    document.append(line.trim());
                 }
             }
-            staxParserForDocument(document);
+            staxParserForDocument(document.toString());
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(TheGioiGearCrawler.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -66,8 +64,6 @@ public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
         document = document.trim().replaceAll("&hellip;", "");
         XMLEventReader eventReader = parseStringToXMLEventReader(document);
         Iterator<XMLEvent> events = autoAddMissingTag(eventReader);
-        
-        int endTagMark = 0;
         
         while (events.hasNext()) {
             XMLEvent event = (XMLEvent) events.next();
@@ -94,7 +90,7 @@ public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
         getLastPage(url);
         for (int i = 0; i <= lastPage; i++) {
             String pageUrl = url + "?page=" + i;
-            Thread dataCrawler = new Thread(new TheGioiGearCrawler(null, pageUrl));
+            Thread dataCrawler = new Thread(new TheGioiGearCrawler(pageUrl));
             dataCrawler.start();
         }
     }

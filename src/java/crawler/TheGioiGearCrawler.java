@@ -9,7 +9,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletContext;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
@@ -26,8 +25,7 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
     private String url;
     private String domain = AppConstant.urlTheGioiGear;
     
-    public TheGioiGearCrawler(ServletContext context, String url) {
-        super(context);
+    public TheGioiGearCrawler(String url) {
         this.url = url;
     }
     
@@ -36,7 +34,7 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
         try {
             reader = getBufferReaderForURL(url);
             String line = "";
-            String document = "";
+            StringBuilder document = new StringBuilder("");
             boolean isStart = false;
             while ((line = reader.readLine()) != null) {
                 if (isStart && line.contains("<div id=\"pagination\" class=\"\">")) {
@@ -44,13 +42,13 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
                 }
                 if (isStart) {
 //                    System.out.println(line);
-                    document += line.trim();
+                    document.append(line.trim());
                 }
                 if (line.contains("<div class=\"col-md-12 col-sm-12 col-xs-12 content-product-list\">")) {
                     isStart = true;
                 }
             }
-            staxParserForDocument(document);
+            staxParserForDocument(document.toString());
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(TheGioiGearCrawler.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

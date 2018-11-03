@@ -11,7 +11,7 @@ public class MagicalMainCrawler {
             "https://www.adayroi.com/tai-nghe-may-tinh-c374"
         };
         for (String url : cate) {
-            Thread crawler = new Thread(new ADayRoiPageCrawler(null, url));
+            Thread crawler = new Thread(new ADayRoiPageCrawler(url));
             crawler.start();
         }
 
@@ -22,7 +22,7 @@ public class MagicalMainCrawler {
             "https://thegioigear.com/collections/chuot"
         };
         for (String url : cate1) {
-            Thread crawler = new Thread(new TheGioiGearPageCrawler(null, url));
+            Thread crawler = new Thread(new TheGioiGearPageCrawler(url));
             crawler.start();
         }
     }

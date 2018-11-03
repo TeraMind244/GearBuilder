@@ -9,7 +9,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletContext;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
@@ -26,8 +25,7 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
     private String url;
     private String domain = AppConstant.urlADayRoi;
 
-    public ADayRoiCrawler(ServletContext context, String url) {
-        super(context);
+    public ADayRoiCrawler(String url) {
         this.url = url;
     }
     
@@ -36,7 +34,7 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
         try {
             reader = getBufferReaderForURL(url);
             String line = "";
-            String document = "";
+            StringBuilder document = new StringBuilder("");
             boolean isStart = false;
             while ((line = reader.readLine()) != null) {
                 if (isStart && line.contains(".product-item_info-text-sale span")) {
@@ -47,10 +45,10 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
                 }
                 if (isStart) {
 //                    System.out.println(line);
-                    document += line.trim();
+                    document.append(line.trim());
                 }
             }
-            staxParserForDocument(document);
+            staxParserForDocument(document.toString());
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(ADayRoiCrawler.class.getName()).log(Level.SEVERE, url, ex);
         } catch (Exception ex) {

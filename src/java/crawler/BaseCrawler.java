@@ -24,14 +24,7 @@ import javax.xml.stream.events.XMLEvent;
 
 public abstract class BaseCrawler {
     
-    private ServletContext context;
-
-    public BaseCrawler(ServletContext context) {
-        this.context = context;
-    }
-
-    public ServletContext getContext() {
-        return context;
+    public BaseCrawler() {
     }
     
     protected BufferedReader getBufferReaderForURL(String urlString)
