@@ -93,13 +93,14 @@ public class CrawlerUtil {
         gearName = toRawString(gearName.toLowerCase());
 
         if ((gearName.contains("pad") || gearName.contains("lot chuot") || gearName.contains("ban di")) 
-                && !gearName.contains("tang") && !gearName.contains("gamepad")) {
+                && !gearName.contains("tang") && !gearName.contains("gamepad") && !gearName.contains("combo")) {
             return pad;
         }
         if (gearName.contains("ban phim")) {
             return keyboard;
         }
-        if (gearName.contains("chuot") || gearName.contains("mouse") || gearName.contains("optical")) {
+        if (gearName.contains("chuot") || gearName.contains("mouse") || gearName.contains("optical")
+                 && !gearName.contains("combo")) {
             return mouse;
         }
         if (gearName.contains("tai nghe")) {

@@ -27,15 +27,20 @@ public class BuilderServlet extends HttpServlet {
         
         String moneyParam = request.getParameter("txtMoney");
         
+        String mousePercentageStr = request.getParameter("txtMousePercentage");
+        String keyboardPercentageStr = request.getParameter("txtKeyboardPercentage");
+        String padPercentageStr = request.getParameter("txtPadPercentage");
+        String headsetPercentageStr = request.getParameter("txtHeadsetPercentage");
+        
         try {
             int money = moneyParam == null ? 0 : Integer.parseInt(moneyParam.trim());
 
-            int mousePercentage = 35 * money / 100;
-            int keyBoardPercentage = 35 * money / 100;
-            int padPercentage = 5 * money / 100;
-            int headsetPercentage = 25 * money / 100;
+            int mousePercentage = (mousePercentageStr == null ? 35 : Integer.parseInt(mousePercentageStr)) * money / 100;
+            int keyBoardPercentage = (keyboardPercentageStr == null ? 35 : Integer.parseInt(keyboardPercentageStr)) * money / 100;
+            int padPercentage = (padPercentageStr == null ? 5 : Integer.parseInt(padPercentageStr)) * money / 100;
+            int headsetPercentage = (headsetPercentageStr == null ? 25 : Integer.parseInt(headsetPercentageStr)) * money / 100;
             
-            int minMoney = (int)Math.floor(money * 0.98);
+            int minMoney = (int)Math.floor(money * 0.95);
             
             GearDAO dao = new GearDAO();
             

@@ -8,13 +8,45 @@
         <title>Builder</title>
         <link rel="stylesheet" href="css/search.css" />
     </head>
-    <body>
+    <body onload="initComponents()">
         <h1>Gear Builder</h1>
         <a href="SearchServlet">Back to search page!</a>
-        <form action="OrderServlet" method="GET">
-            Số tiền: <input type="number" name="txtMoney" value="${param.txtMoney}" />
-            <button name="btAction" value="build" >Build</button>
-        </form>
+        <div id="search--div">
+            Số tiền: <input type="number" name="txtMoney" value="${param.txtMoney}" oninput="validateInput()" onchange="validateInput()" />
+            <button name="btAction" value="build" onclick="buildGearSet()" >Build</button>
+            <br/>
+            <a href="javascipt:void(0)" onclick="toggleAdvancedSearch()" >Nâng cao</a>
+            <br/>
+            <div id="advanced-search--div" style="display: none;">
+                <table>
+                    <tr>
+                        <td>Chuột</td>
+                        <td>
+                            <input value="35" type="number" min="0" max="100" name="txtMousePercentage" oninput="validateInput()" onchange="validateInput()" />%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Bàn phím</td>
+                        <td>
+                            <input value="35" type="number" min="0" max="100" name="txtKeyboardPercentage" oninput="validateInput()" onchange="validateInput()" />%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lót chuột</td>
+                        <td>
+                            <input value="10" type="number" min="0" max="100" name="txtPadPercentage" oninput="validateInput()" onchange="validateInput()" />%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tai nghe</td>
+                        <td>
+                            <input value="25" type="number" min="0" max="100" name="txtHeadsetPercentage" disabled />%
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <span style="color: red;" id="error-msg"></span>
+        </div>
         <br/>
         
         <c:if test="${not empty param.txtMoney}">
@@ -45,8 +77,6 @@
                                     </a>
                                     <br/>
                                     ${gearset.mouse.getViewPrice()}
-                                    <br/>
-                                    <a href="//TODO" >Change this gear!</a>
                                 </td>
                                 <td>
                                     <a href="${gearset.keyBoard.gearUrl}" target="_blank">
@@ -56,8 +86,6 @@
                                     </a>
                                     <br/>
                                     ${gearset.keyBoard.getViewPrice()}
-                                    <br/>
-                                    <a href="//TODO" >Change this gear!</a>
                                 </td>
                                 <td>
                                     <a href="${gearset.pad.gearUrl}" target="_blank">
@@ -67,8 +95,6 @@
                                     </a>
                                     <br/>
                                     ${gearset.pad.getViewPrice()}
-                                    <br/>
-                                    <a href="//TODO" >Change this gear!</a>
                                 </td>
                                 <td>
                                     <a href="${gearset.headset.gearUrl}" target="_blank">
@@ -78,8 +104,6 @@
                                     </a>
                                     <br/>
                                     ${gearset.headset.getViewPrice()}
-                                    <br/>
-                                    <a href="//TODO" >Change this gear!</a>
                                 </td>
                                 <td>
                                     ${gearset.getViewValue()}
@@ -93,5 +117,6 @@
                 <h3>Không tìm thấy Gear nào!</h3>
             </c:if>
         </c:if>
+        <script type="text/javascript" src="js/search.js"></script>
     </body>
 </html>

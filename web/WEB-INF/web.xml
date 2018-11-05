@@ -14,7 +14,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
-        <url-pattern>/SearchServlet</url-pattern>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>OrderServlet</servlet-name>
@@ -22,7 +22,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BuilderServlet</servlet-name>
-        <url-pattern>/BuilderServlet</url-pattern>
+        <url-pattern>/build</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

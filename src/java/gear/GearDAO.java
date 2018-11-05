@@ -70,6 +70,7 @@ public class GearDAO implements Serializable {
     
     public synchronized Gear getGearByHashStr(int hashStr) {
         try {
+            beginTransaction();
             session.getTransaction().begin();
             String sql = "FROM Gear WHERE HashStr = :hashStr";
             Query query = session.createQuery(sql);

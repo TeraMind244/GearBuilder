@@ -14,8 +14,8 @@ public class OrderServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-//        String url = PathLookup.SEARCH_SERVLET;
-        String url = PathLookup.BUILDER_PAGE;
+        String url = PathLookup.SEARCH_SERVLET;
+//        String url = PathLookup.BUILDER_PAGE;
         String action = request.getParameter("btAction");
         
         if (action != null) {
