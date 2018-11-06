@@ -20,7 +20,7 @@ public class GearDAO implements Serializable {
     private final static Object LOCK = new Object();
 
     public GearDAO() {
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session = HibernateUtil.getSessionFactory().openSession();
     }
     
     public static GearDAO getInstance() {
@@ -32,15 +32,7 @@ public class GearDAO implements Serializable {
         return instance;
     }
     
-    private void beginTransaction() {
-        synchronized (LOCK) {
-            if (!session.isOpen()) {
-                session = HibernateUtil.getSessionFactory().openSession();
-            }
-        }
-    }
-    
-    public void saveGear(Gear newGear) {
+    public synchronized void saveGear(Gear newGear) {
         Gear gear = getGearByHashStr(newGear.getHashStr());
         if (gear == null) {
             addGear(newGear);
@@ -51,9 +43,8 @@ public class GearDAO implements Serializable {
         }
     }
     
-    public synchronized void addGear(Gear gear) {
+    public void addGear(Gear gear) {
         try {
-            beginTransaction();
             session.getTransaction().begin();
             session.save(gear);
             session.flush();
@@ -63,14 +54,11 @@ public class GearDAO implements Serializable {
                 session.getTransaction().rollback();
             }
             Logger.getLogger(GearDAO.class.getName()).log(Level.SEVERE, "Add Gear ERROR", ex);
-        } catch (Exception ex) {
-            
         }
     }
     
-    public synchronized Gear getGearByHashStr(int hashStr) {
+    public Gear getGearByHashStr(int hashStr) {
         try {
-            beginTransaction();
             session.getTransaction().begin();
             String sql = "FROM Gear WHERE HashStr = :hashStr";
             Query query = session.createQuery(sql);
@@ -84,15 +72,12 @@ public class GearDAO implements Serializable {
                 session.getTransaction().rollback();
             }
             Logger.getLogger(GearDAO.class.getName()).log(Level.SEVERE, "Get Gear ERROR", ex);
-        } catch (Exception ex) {
-            
         }
         return null;
     }
     
-    public synchronized void updateGear(Gear gear) {
+    public void updateGear(Gear gear) {
         try {
-            beginTransaction();
             session.getTransaction().begin();
             Gear oldGear = (Gear) session.get(Gear.class, gear.getHashStr());
             oldGear.setGearUrl(gear.getGearUrl());
@@ -107,8 +92,6 @@ public class GearDAO implements Serializable {
                 session.getTransaction().rollback();
             }
             Logger.getLogger(GearDAO.class.getName()).log(Level.SEVERE, "Update Gear ERROR", ex);
-        } catch (Exception ex) {
-            
         }
     }
     
@@ -116,7 +99,6 @@ public class GearDAO implements Serializable {
         SearchGearView searchGearView = new SearchGearView();
         searchGearView.setCurrentPage(page);
         try {
-            beginTransaction();
             session.getTransaction().begin();
             String sql = "FROM Gear " + filter.getQueryStatement();
             Query query = session.createQuery(sql);
@@ -151,7 +133,6 @@ public class GearDAO implements Serializable {
     public List<Gear> getAllGearOfType(String type, int minPrice, int maxPrice) {
         List<Gear> gears = new ArrayList<>();
         try {
-            beginTransaction();
             session.getTransaction().begin();
             
             String sql = "FROM Gear WHERE Type = :type AND PRICE BETWEEN :minPrice and :maxPrice";

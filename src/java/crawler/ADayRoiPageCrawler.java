@@ -7,10 +7,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import util.CrawlerUtil;
@@ -67,10 +65,10 @@ public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
             System.out.println("URL: " + url + ", Last page: " + lastPage);
             return;
         }
-        document = document.trim().substring(document.indexOf(startDocument), document.length() - endDocument.length());
-        document = document.replaceAll("&page", "&amp;page").replaceAll("&nbsp;", "");
-//        document = document.trim();
-        
+        document = document.trim()
+                .substring(document.indexOf(startDocument), document.length() - endDocument.length())
+                .replaceAll("&page", "&amp;page")
+                .replaceAll("&nbsp;", "");
 //        System.out.println(document);
         
         XMLEventReader eventReader = parseStringToXMLEventReader(document);
@@ -85,10 +83,8 @@ public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
                 String tagName = startElement.getName().getLocalPart();
                 
                 if ("a".equals(tagName)) {
-                    Attribute attrAria = startElement.getAttributeByName(new QName("aria-label"));
-                    Attribute attrHref = startElement.getAttributeByName(new QName("href"));
-                    if (attrAria != null) {
-                        lastPage = CrawlerUtil.getPage(attrHref.getValue(), "&page=");
+                    if (getAttribute(startElement, "aria-label").length() > 0) {
+                        lastPage = CrawlerUtil.getPage(getAttribute(startElement, "href"), "&page=");
                     }
                 }
             }
@@ -104,7 +100,6 @@ public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
             Thread dataCrawler = new Thread(new ADayRoiCrawler(pageUrl));
             dataCrawler.start();
         }
-        
     }
     
 }

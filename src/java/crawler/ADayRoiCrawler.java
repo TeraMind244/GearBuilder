@@ -9,10 +9,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
@@ -68,13 +66,16 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
     protected void staxParserForDocument(String document)
             throws UnsupportedEncodingException, XMLStreamException {
         String startDocument = "<div class=\"product-list__container\">";
-        document = document.trim().substring(document.indexOf(startDocument) + startDocument.length(), document.length());
-        document = document.replaceAll("&", "&amp;").replaceAll("disabled", "").replaceAll("\"a>", "\">");
+        document = document.trim()
+                .substring(document.indexOf(startDocument) + startDocument.length(), document.length())
+                .replaceAll("&", "&amp;")
+                .replaceAll("disabled", "")
+                .replaceAll("\"a>", "\">");
         
         XMLEventReader eventReader = parseStringToXMLEventReader(document);
         Iterator<XMLEvent> events = autoAddMissingTag(eventReader);
         
-        String source = "adayroi.com";
+        String source = domain + "/";
         
         String productUrl = "";
         String imgUrl = "";
@@ -97,37 +98,37 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
                 StartElement startElement = event.asStartElement();
                 String tagName = startElement.getName().getLocalPart();
                 if ("div".equals(tagName)) {
-                    Attribute attrClass = startElement.getAttributeByName(new QName("class"));
-                    if (attrClass != null) {
-                        if (attrClass.getValue().equals("product-item__container")) {
-                            productStartMark = endTagMark;
-                        } else if (attrClass.getValue().equals("product-item__info-price")) {
-                            productPriceMark = endTagMark;
-                        }
+                    String attrClass = getAttribute(startElement, "class");
+                    
+                    if (attrClass.equals("product-item__container")) {
+                        productStartMark = endTagMark;
+                    } else if (attrClass.equals("product-item__info-price")) {
+                        productPriceMark = endTagMark;
                     }
                 } else if ("a".equals(tagName)) {
-                    Attribute attrHref = startElement.getAttributeByName(new QName("href"));
-                    Attribute attrClass = startElement.getAttributeByName(new QName("class"));
-                    if (attrHref != null && productStartMark > 0) {
-                        productUrl = domain + attrHref.getValue();
+                    String attrHref = getAttribute(startElement, "href");
+                    
+                    if (attrHref.length() > 0 && productStartMark > 0) {
+                        productUrl = domain + attrHref;
                     }
-                    if (attrClass != null && attrClass.getValue().equals("product-item__info-title") && productStartMark > 0) {
+                    if (getAttribute(startElement, "class").equals("product-item__info-title") && productStartMark > 0) {
                         productTitleMark = endTagMark;
                     }
                 } else if ("img".equals(tagName)) {
-                    Attribute attrSrc = startElement.getAttributeByName(new QName("data-src"));
-                    if (attrSrc != null && productStartMark > 0) {
-                        imgUrl = attrSrc.getValue();
+                    String attrSrc = getAttribute(startElement, "data-src");
+                    
+                    if (attrSrc.length() > 0 && productStartMark > 0) {
+                        imgUrl = attrSrc;
                     }
                 } else if ("span".equals(tagName)) {
-                    Attribute attrClass = startElement.getAttributeByName(new QName("class"));
-                    if (attrClass != null && attrClass.getValue().equals("product-item__info-price-sale")) {
+                    if (getAttribute(startElement, "class").equals("product-item__info-price-sale")) {
                         productPriceMark = endTagMark;
                     }
                 }
             } else if (event.isCharacters()) {
                 Characters characters = event.asCharacters();
                 String text = characters.getData().trim();
+                
                 if (productPriceMark > 0) {
                     price = CrawlerUtil.convertToPrice(text);
                 } else if (productTitleMark > 0) {
@@ -137,10 +138,11 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
             } else if (event.isEndElement()) {
                 EndElement endElement = event.asEndElement();
                 String tagName = endElement.getName().getLocalPart();
+                
                 if ("div".equals(tagName)) {
                     if (endTagMark == productStartMark) {
                         if (price > 0) {
-                            int hashStr = CrawlerUtil.hashingString(productName + source);
+                            int hashStr = CrawlerUtil.hashingString(productUrl);
                             Gear gear = new Gear(hashStr, productName, source, productUrl, imgUrl, price, type);
                             GearDAO.getInstance().saveGear(gear);
 //                            System.out.println("Product{name: " + productName + ", imgUrl: " + imgUrl + ", productUrl: " + productUrl + ", price: " + price + "k}");

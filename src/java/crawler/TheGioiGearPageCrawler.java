@@ -7,10 +7,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import util.CrawlerUtil;
@@ -60,7 +58,6 @@ public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
     @Override
     protected void staxParserForDocument(String document)
             throws UnsupportedEncodingException, XMLStreamException {
-        
         document = document.trim().replaceAll("&hellip;", "");
         XMLEventReader eventReader = parseStringToXMLEventReader(document);
         Iterator<XMLEvent> events = autoAddMissingTag(eventReader);
@@ -74,10 +71,9 @@ public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
                 String tagName = startElement.getName().getLocalPart();
                 
                 if ("a".equals(tagName)) {
-                    Attribute attrHref = startElement.getAttributeByName(new QName("href"));
-                    Attribute attrClass = startElement.getAttributeByName(new QName("class"));
-                    if (attrHref != null && attrClass != null) {
-                        lastPage = CrawlerUtil.getPage(attrHref.getValue(), "?page=");
+                    String attrHref = getAttribute(startElement, "href");
+                    if (attrHref.length() > 0 && getAttribute(startElement, "class").length() > 0) {
+                        lastPage = CrawlerUtil.getPage(attrHref, "?page=");
                     }
                 }
             }

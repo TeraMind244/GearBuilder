@@ -19,7 +19,9 @@ import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.EndElement;
+import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 public abstract class BaseCrawler {
@@ -85,6 +87,15 @@ public abstract class BaseCrawler {
             }
         }
         return events.iterator();
+    }
+    
+    public String getAttribute(StartElement startElement, String name) {
+        Attribute attribute = startElement.getAttributeByName(new QName(name));
+        if (attribute == null) {
+            return "";
+        } else {
+            return attribute.getValue().trim();
+        }
     }
     
 }

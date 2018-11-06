@@ -7,40 +7,69 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Builder</title>
         <link rel="stylesheet" href="css/search.css" />
+        <script type="text/javascript" src="js/app.js"></script>
     </head>
-    <body onload="initComponents()">
+    <body>
         <h1>Gear Builder</h1>
-        <a href="SearchServlet">Back to search page!</a>
+        <a href="search">Back to search page!</a>
         <div id="search--div">
             Số tiền: <input type="number" name="txtMoney" value="${param.txtMoney}" oninput="validateInput()" onchange="validateInput()" />
             <button name="btAction" value="build" onclick="buildGearSet()" >Build</button>
             <br/>
-            <a href="javascipt:void(0)" onclick="toggleAdvancedSearch()" >Nâng cao</a>
+            <a href="#" onclick="toggleAdvancedSearch()" >Nâng cao</a>
             <br/>
             <div id="advanced-search--div" style="display: none;">
                 <table>
                     <tr>
                         <td>Chuột</td>
                         <td>
-                            <input value="35" type="number" min="0" max="100" name="txtMousePercentage" oninput="validateInput()" onchange="validateInput()" />%
+                            <input class="percentage--input" 
+                                    <c:if test="${empty param.txtMousePercentage}">
+                                        value="35"
+                                    </c:if>
+                                    <c:if test="${not empty param.txtMousePercentage}">
+                                        value="${param.txtMousePercentage}"
+                                    </c:if>
+                                    type="number" min="0" max="100" name="txtMousePercentage" oninput="validateInput()" onchange="validateInput()" />%
                         </td>
                     </tr>
                     <tr>
                         <td>Bàn phím</td>
                         <td>
-                            <input value="35" type="number" min="0" max="100" name="txtKeyboardPercentage" oninput="validateInput()" onchange="validateInput()" />%
+                            <input class="percentage--input"
+                                    <c:if test="${empty param.txtKeyboardPercentage}">
+                                        value="35"
+                                    </c:if>
+                                    <c:if test="${not empty param.txtKeyboardPercentage}">
+                                        value="${param.txtKeyboardPercentage}"
+                                    </c:if> 
+                                   type="number" min="0" max="100" name="txtKeyboardPercentage" oninput="validateInput()" onchange="validateInput()" />%
                         </td>
                     </tr>
                     <tr>
                         <td>Lót chuột</td>
                         <td>
-                            <input value="10" type="number" min="0" max="100" name="txtPadPercentage" oninput="validateInput()" onchange="validateInput()" />%
+                            <input class="percentage--input"
+                                    <c:if test="${empty param.txtPadPercentage}">
+                                        value="10"
+                                    </c:if>
+                                    <c:if test="${not empty param.txtPadPercentage}">
+                                        value="${param.txtPadPercentage}"
+                                    </c:if> 
+                                    type="number" min="0" max="100" name="txtPadPercentage" oninput="validateInput()" onchange="validateInput()" />%
                         </td>
                     </tr>
                     <tr>
                         <td>Tai nghe</td>
                         <td>
-                            <input value="25" type="number" min="0" max="100" name="txtHeadsetPercentage" disabled />%
+                            <input class="percentage--input"
+                                   <c:if test="${empty param.txtHeadsetPercentage}">
+                                        value="25"
+                                    </c:if>
+                                    <c:if test="${not empty param.txtHeadsetPercentage}">
+                                        value="${param.txtHeadsetPercentage}"
+                                    </c:if> 
+                                   type="number" min="0" max="100" name="txtHeadsetPercentage" disabled />%
                         </td>
                     </tr>
                 </table>
@@ -117,6 +146,6 @@
                 <h3>Không tìm thấy Gear nào!</h3>
             </c:if>
         </c:if>
-        <script type="text/javascript" src="js/search.js"></script>
+        <script type="text/javascript" src="js/builder.js"></script>
     </body>
 </html>

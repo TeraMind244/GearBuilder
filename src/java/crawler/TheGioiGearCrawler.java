@@ -9,10 +9,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
@@ -69,7 +67,7 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
         XMLEventReader eventReader = parseStringToXMLEventReader(document);
         Iterator<XMLEvent> events = autoAddMissingTag(eventReader);
         
-        String source = "thegioigear.com";
+        String source = domain + "/";
         
         String productUrl = "";
         String imgUrl = "";
@@ -82,6 +80,7 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
         int productStartMark = 0;
         int productNameMark = 0;
         int productPriceMark = 0;
+        boolean soldOut = false;
         
         while (events.hasNext()) {
             XMLEvent event = (XMLEvent) events.next();
@@ -91,38 +90,45 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
                 endTagMark++;
                 StartElement startElement = event.asStartElement();
                 String tagName = startElement.getName().getLocalPart();
+                
                 if ("div".equals(tagName)) {
-                    Attribute attrClass = startElement.getAttributeByName(new QName("class"));
-                    if (attrClass != null) {
-                        if (attrClass.getValue().equals("product-block product-resize")) {
-                            productStartMark = endTagMark;
-                        }
+                    String attrClass = getAttribute(startElement, "class");
+                    
+                    if (attrClass.equals("product-block product-resize")) {
+                        productStartMark = endTagMark;
+                    } else if (attrClass.equals("sold-out")) {
+                        soldOut = true;
                     }
                 } else if ("a".equals(tagName)) {
-                    Attribute attrHref = startElement.getAttributeByName(new QName("href"));
-                    if (attrHref != null && productNameMark > 0) {
-                        productUrl = domain + attrHref.getValue();
+                    String attrHref = getAttribute(startElement, "href");
+                    
+                    if (attrHref.length() > 0 && productNameMark > 0) {
+                        productUrl = domain + attrHref;
                     }
                 } else if ("img".equals(tagName)) {
-                    Attribute attrClass = startElement.getAttributeByName(new QName("class"));
-                    Attribute attrSrc = startElement.getAttributeByName(new QName("src"));
-                    if (attrClass != null && attrClass.getValue().contains("first-image") && attrSrc != null) {
-                        imgUrl = attrSrc.getValue();
+                    String attrClass = getAttribute(startElement, "class");
+                    String attrSrc = getAttribute(startElement, "src");
+                    
+                    if (attrClass.length() > 0 && attrClass.contains("first-image") && attrSrc.length() > 0) {
+                        imgUrl = attrSrc;
                     }
                 } else if ("h3".equals(tagName)) {
-                    Attribute attrClass = startElement.getAttributeByName(new QName("class"));
-                    if (attrClass != null && attrClass.getValue().equals("pro-name") && productStartMark > 0) {
+                    String attrClass = getAttribute(startElement, "class");
+                    
+                    if (attrClass.length() > 0 && attrClass.equals("pro-name") && productStartMark > 0) {
                         productNameMark = endTagMark;
                     }
                 }  else if ("p".equals(tagName)) {
-                    Attribute attrClass = startElement.getAttributeByName(new QName("class"));
-                    if (attrClass != null && attrClass.getValue().equals("pro-price")) {
+                    String attrClass = getAttribute(startElement, "class");
+                    
+                    if (attrClass.length() > 0 && attrClass.equals("pro-price")) {
                         productPriceMark = endTagMark;
                     }
                 }
             } else if (event.isCharacters()) {
                 Characters characters = event.asCharacters();
                 String text = characters.getData().trim();
+                
                 if (productPriceMark > 0) {
                     price = CrawlerUtil.convertToPrice(text);
                 } else if (productNameMark > 0) {
@@ -132,10 +138,11 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
             } else if (event.isEndElement()) {
                 EndElement endElement = event.asEndElement();
                 String tagName = endElement.getName().getLocalPart();
+                
                 if ("div".equals(tagName)) {
                     if (endTagMark == productStartMark) {
-                        if (price > 0) {
-                            int hashStr = CrawlerUtil.hashingString(productName + source);
+                        if (price > 0 && !soldOut) {
+                            int hashStr = CrawlerUtil.hashingString(productUrl);
                             Gear gear = new Gear(hashStr, productName, source, productUrl, imgUrl, price, type);
                             GearDAO.getInstance().saveGear(gear);
 //                            System.out.println("Product{name: " + productName + ", imgUrl: " + imgUrl + ", productUrl: " + productUrl + ", price: " + price + "k}");
@@ -146,6 +153,7 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
                         productName = "";
                         type = "";
                         price = 0;
+                        soldOut = false;
                     }
                 } else if ("h3".equals(tagName)) {
                     if (endTagMark == productNameMark) {
