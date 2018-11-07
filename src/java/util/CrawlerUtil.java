@@ -121,4 +121,12 @@ public class CrawlerUtil {
         }
     }
     
+    public static String removeParamFromUrl(String url) {
+        if (url.contains("?")) {
+            return url.substring(0, url.indexOf("?"));
+        } else {
+            return url;
+        }
+    }
+    
 }

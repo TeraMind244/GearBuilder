@@ -103,7 +103,7 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
                     String attrHref = getAttribute(startElement, "href");
                     
                     if (attrHref.length() > 0 && productNameMark > 0) {
-                        productUrl = domain + attrHref;
+                        productUrl = CrawlerUtil.removeParamFromUrl(domain + attrHref);
                     }
                 } else if ("img".equals(tagName)) {
                     String attrClass = getAttribute(startElement, "class");

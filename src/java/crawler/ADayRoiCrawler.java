@@ -109,7 +109,7 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
                     String attrHref = getAttribute(startElement, "href");
                     
                     if (attrHref.length() > 0 && productStartMark > 0) {
-                        productUrl = domain + attrHref;
+                        productUrl = CrawlerUtil.removeParamFromUrl(domain + attrHref);
                     }
                     if (getAttribute(startElement, "class").equals("product-item__info-title") && productStartMark > 0) {
                         productTitleMark = endTagMark;
