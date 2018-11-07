@@ -61,22 +61,22 @@
                                     <c:if test="${param.ddlSortBy == 'nameAsc'}">
                                         selected
                                     </c:if>
-                                    >Tên (Tăng)</option>
+                                    >Tên (A-Z)</option>
                             <option value="nameDesc"
                                     <c:if test="${param.ddlSortBy == 'nameDesc'}">
                                         selected
                                     </c:if>
-                                        >Tên (Giảm)</option>
+                                        >Tên (Z-A)</option>
                             <option value="priceAsc"
                                     <c:if test="${param.ddlSortBy == 'priceAsc'}">
                                         selected
                                     </c:if>
-                                    >Giá (Tăng)</option>
+                                    >Giá (++)</option>
                             <option value="priceDesc"
                                     <c:if test="${param.ddlSortBy == 'priceDesc'}">
                                         selected
                                     </c:if>
-                                    >Giá (Giảm)</option>
+                                    >Giá (--)</option>
                         </select>
                     </td>
                 </tr>
@@ -116,7 +116,6 @@
                     <tr>
                         <th>Image</th>
                         <th>Name</th>
-                        <th>Source</th>
                         <th>Price</th>
                         <th>Type</th>
                     </tr>
@@ -132,7 +131,6 @@
                             <td>
                                 <a href="${gear.gearUrl}" target="_blank">${gear.gearName}</a>
                             </td>
-                            <td>${gear.source}</td>
                             <td>${gear.getViewPrice()}</td>
                             <td>${gear.getViewType()}</td>
                         </tr>

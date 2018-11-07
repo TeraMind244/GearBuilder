@@ -47,7 +47,7 @@ public class BuilderServlet extends HttpServlet {
             List<Gear> listMouse = dao.getAllGearOfType("chuot", mousePercentage * 90 / 100, mousePercentage * 110 / 100);
             List<Gear> listKeyBoard = dao.getAllGearOfType("ban-phim", keyBoardPercentage * 90 / 100, keyBoardPercentage * 110 / 100);
             List<Gear> listPad = dao.getAllGearOfType("pad", padPercentage * 50 / 100, padPercentage * 150 / 100);
-            List<Gear> listHeadset = dao.getAllGearOfType("tai-nghe", headsetPercentage * 80 / 100, headsetPercentage * 110 / 100);
+            List<Gear> listHeadset = dao.getAllGearOfType("tai-nghe", headsetPercentage * 80 / 100, headsetPercentage * 120 / 100);
             
 //            List<Gear> listPad = listMouse;
 //            List<Gear> listKeyBoard = listMouse;
