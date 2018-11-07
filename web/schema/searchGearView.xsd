@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<xsd:schema version="1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:gear="http://www.netbeans.org/schema/Gear"
+           elementFormDefault="qualified"
+           targetNamespace="http://www.netbeans.org/schema/SearchGearView"
+           xmlns="http://www.netbeans.org/schema/SearchGearView">
+
+    <xsd:import namespace="http://www.netbeans.org/schema/Gear" schemaLocation="../schema/gear.xsd" />
+    
+    <xsd:element name="SearchGearView" type="SearchGearViewType" />
+    
+    <xsd:complexType name="SearchGearViewType">
+        <xsd:sequence>
+            <xsd:element name="GearList" type="GearListType" />
+            <xsd:element name="CurrentPage" type="xsd:positiveInteger" />
+            <xsd:element name="ResultCount" type="xsd:positiveInteger" />
+            <xsd:element name="MaxPage" type="xsd:positiveInteger" />
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="GearListType">
+        <xsd:sequence>
+            <xsd:element ref="gear:Gear" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    
+</xsd:schema>

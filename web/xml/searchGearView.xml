@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<searchGearView:SearchGearView 
+    xmlns="http://www.netbeans.org/schema/Gear"
+    xmlns:searchGearView="http://www.netbeans.org/schema/SearchGearView"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.netbeans.org/schema/SearchGearView ../schema/searchGearView.xsd">
+    
+    <searchGearView:GearList>
+        <Gear HashStr='3103778'>
+            <GearName>
+                Razer FireFly
+            </GearName>
+            <Source>
+                thegioigear.com
+            </Source>
+            <GearUrl>
+                https://thegioigear.com/collections/lot-chuot/products/firefly
+            </GearUrl>
+            <ImgUrl>
+                //hstatic.net/809/1000037809/1/2015/9-18/brand-product-page-hero_firefly_06-01_large.png
+            </ImgUrl>
+            <Price>
+                1.590.000₫
+            </Price>
+            <Type>
+                Khác
+            </Type>
+        </Gear>
+        <Gear HashStr='3396323'>
+            <GearName>
+                Bàn phím cơ Corsair K95 Platinum RGB MX Speed CH-9127014-NA
+            </GearName>
+            <Source>
+                adayroi.com
+            </Source>
+            <GearUrl>
+                https://www.adayroi.com/ban-phim-co-corsair-k95-platinum-rgb-mx-speed-ch-9127014-na-p-1349286?offer=1349286_EEC
+            </GearUrl>
+            <ImgUrl>
+                https://media-static-adayroi.cdn.vccloud.vn/240_240/80/h32/h28/14814317051934.jpg
+            </ImgUrl>
+            <Price>
+                4.990.000₫
+            </Price>
+            <Type>
+                Bàn Phím
+            </Type>
+        </Gear>
+    </searchGearView:GearList>
+    <searchGearView:CurrentPage>
+        5
+    </searchGearView:CurrentPage>
+    <searchGearView:ResultCount>
+        347
+    </searchGearView:ResultCount>
+    <searchGearView:MaxPage>
+        17
+    </searchGearView:MaxPage>
+</searchGearView:SearchGearView>

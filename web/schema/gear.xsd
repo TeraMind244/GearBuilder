@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<xsd:schema version="1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="http://www.netbeans.org/schema/Gear"
+           xmlns="http://www.netbeans.org/schema/Gear">
+
+    <xsd:element name="Gear" type="GearType" />
+    
+    <xsd:complexType name="GearType" >
+        <xsd:sequence>
+            <xsd:element name="GearName" type="xsd:string" />
+            <xsd:element name="Source" type="xsd:string" />
+            <xsd:element name="GearUrl" type="xsd:string" />
+            <xsd:element name="ImgUrl" type="xsd:string" />
+            <xsd:element name="Price" type="xsd:string" />
+            <xsd:element name="Type" type="xsd:string" />
+        </xsd:sequence>
+        <xsd:attribute name="HashStr" type="xsd:positiveInteger" />
+    </xsd:complexType>
+    
+</xsd:schema>

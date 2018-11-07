@@ -118,7 +118,7 @@ public class GearDAO implements Serializable {
             query.setFirstResult(page * AppConstant.pageSize);
             query.setMaxResults(AppConstant.pageSize);
             
-            searchGearView.setGears(query.list());
+            searchGearView.setGears(new GearList(query.list()));
             session.flush();
             session.getTransaction().commit();
         } catch (HibernateException ex) {

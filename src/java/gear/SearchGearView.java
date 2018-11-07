@@ -2,13 +2,26 @@
 package gear;
 
 import generated.gear.Gear;
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.XMLEvent;
 import util.AppConstant;
 
 
@@ -22,8 +35,8 @@ import util.AppConstant;
 })
 public class SearchGearView implements Serializable {
     
-    @XmlElement(name="Gear")
-    private List<Gear> gears;
+    @XmlElement(name="GearList")
+    private GearList gears;
     
     @XmlElement(name="CurrentPage")
     private int currentPage; // zero based
@@ -36,17 +49,17 @@ public class SearchGearView implements Serializable {
         currentPage = 0;
     }
 
-    public SearchGearView(List<Gear> gears, int currentPage, int resultCount) {
+    public SearchGearView(GearList gears, int currentPage, int resultCount) {
         this.gears = gears;
         this.currentPage = currentPage;
         this.resultCount = resultCount;
     }
 
-    public List<Gear> getGears() {
+    public GearList getGears() {
         return gears;
     }
 
-    public void setGears(List<Gear> gears) {
+    public void setGears(GearList gears) {
         this.gears = gears;
     }
 
@@ -89,7 +102,9 @@ public class SearchGearView implements Serializable {
 //            gears.add(gear1);
 //            gears.add(gear2);
 //            
-//            SearchGearView gear = new SearchGearView(gears, 5, 347);
+//            GearList gearList = new GearList(gears);
+//            
+//            SearchGearView gear = new SearchGearView(gearList, 5, 347);
 //            
 //            JAXBContext jaxb = JAXBContext.newInstance(SearchGearView.class);
 //            Marshaller marshaller = jaxb.createMarshaller();
@@ -119,5 +134,5 @@ public class SearchGearView implements Serializable {
 //        XMLEventReader reader = factory.createXMLEventReader(inputStream);
 //        return reader;
 //    }
-//    
+    
 }
