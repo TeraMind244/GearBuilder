@@ -26,22 +26,10 @@ public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
         BufferedReader reader = null;
         try {
             reader = getBufferReaderForURL(url);
-            String line = "";
-            StringBuilder document = new StringBuilder("");
-            boolean isStart = false;
-            while ((line = reader.readLine()) != null) {
-                if (line.contains("<nav class=\"Page navigation\">")) {
-                    isStart = true;
-                }
-                if (isStart && line.contains(".product-item_info-text-sale span")) {
-                    break;
-                }
-                if (isStart) {
-//                    System.out.println(line);
-                    document.append(line.trim());
-                }
-            }
-            staxParserForDocument(document.toString());
+            String fragment = getHtmlFragment(reader, 
+                    "<nav class=\"Page navigation\">", 
+                    ".product-item_info-text-sale span");
+            staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(ADayRoiPageCrawler.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

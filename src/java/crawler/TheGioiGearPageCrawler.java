@@ -26,22 +26,10 @@ public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
         BufferedReader reader = null;
         try {
             reader = getBufferReaderForURL(url);
-            String line = "";
-            StringBuilder document = new StringBuilder("");
-            boolean isStart = false;
-            while ((line = reader.readLine()) != null) {
-                if (line.contains("<div class=\"col-lg-8 col-md-8 col-sm-6 col-xs-12 text-center\">")) {
-                    isStart = true;
-                }
-                if (isStart && line.contains("<div class=\"col-lg-2 col-md-2 col-sm-3 hidden-xs\">")) {
-                    break;
-                }
-                if (isStart) {
-//                    System.out.println(line);
-                    document.append(line.trim());
-                }
-            }
-            staxParserForDocument(document.toString());
+            String fragment = getHtmlFragment(reader, 
+                    "<div class=\"col-lg-8 col-md-8 col-sm-6 col-xs-12 text-center\">", 
+                    "<div class=\"col-lg-2 col-md-2 col-sm-3 hidden-xs\">");
+            staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(TheGioiGearCrawler.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

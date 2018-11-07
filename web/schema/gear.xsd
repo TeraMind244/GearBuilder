@@ -12,12 +12,20 @@
         <xsd:sequence>
             <xsd:element name="GearName" type="xsd:string" />
             <xsd:element name="Source" type="xsd:string" />
-            <xsd:element name="GearUrl" type="xsd:string" />
-            <xsd:element name="ImgUrl" type="xsd:string" />
+            <xsd:element name="GearUrl" type="UrlType" />
+            <xsd:element name="ImgUrl" type="UrlType" />
             <xsd:element name="Price" type="xsd:string" />
             <xsd:element name="Type" type="xsd:string" />
         </xsd:sequence>
         <xsd:attribute name="HashStr" type="xsd:positiveInteger" />
     </xsd:complexType>
+    
+    <xsd:simpleType name="UrlType">
+        <xsd:restriction base="xsd:token">
+            <xsd:pattern value="((https?:)?(\/\/)?(w{2,3}\.)?)?[\w\-@:%.\+~#=]{2,255}\.[a-z]{2,6}[^\s]*"/>
+            <!--<xsd:pattern value="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"/>-->
+            <xsd:minLength value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
     
 </xsd:schema>

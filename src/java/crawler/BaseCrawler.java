@@ -98,4 +98,24 @@ public abstract class BaseCrawler {
         }
     }
     
+    public String getHtmlFragment(BufferedReader reader, String startFragmentMark, String endFragmentMark)
+            throws IOException {
+        String line = "";
+        StringBuilder document = new StringBuilder("");
+        boolean isStart = false;
+        while ((line = reader.readLine()) != null) {
+            if (line.contains(startFragmentMark)) {
+                isStart = true;
+            }
+            if (isStart && line.contains(endFragmentMark)) {
+                break;
+            }
+            if (isStart) {
+//                    System.out.println(line);
+                document.append(line.trim());
+            }
+        }
+        return document.toString();
+    }
+    
 }
