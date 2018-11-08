@@ -11,6 +11,7 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
+import util.AppConstant;
 import util.CrawlerUtil;
 
 public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
@@ -27,8 +28,8 @@ public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
         try {
             reader = getBufferReaderForURL(url);
             String fragment = getHtmlFragment(reader, 
-                    "<nav class=\"Page navigation\">", 
-                    ".product-item_info-text-sale span");
+                    AppConstant.ADayRoiPageCrawlerStartMark, 
+                    AppConstant.ADayRoiPageCrawlerEndMark);
             staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(ADayRoiPageCrawler.class.getName()).log(Level.SEVERE, null, ex);
@@ -46,8 +47,8 @@ public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
     @Override
     protected void staxParserForDocument(String document)
             throws UnsupportedEncodingException, XMLStreamException {
-        String startDocument = "<nav class=\"Page navigation\">";
-        String endDocument = "</section><div class=\"content\"><style>";
+        String startDocument = AppConstant.ADayRoiPageCrawlerStartFragment;
+        String endDocument = AppConstant.ADayRoiPageCrawlerEndFragment;
         if (!document.contains(startDocument)) {
             lastPage = 0;
             System.out.println("URL: " + url + ", Last page: " + lastPage);

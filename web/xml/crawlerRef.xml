@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<crawlerRef>
+    <page name="adayroi" domain="https://www.adayroi.com">
+        <links>
+            <link>https://www.adayroi.com/chuot-may-tinh-c378</link>
+            <link>https://www.adayroi.com/ban-phim-c377</link>
+            <link>https://www.adayroi.com/mieng-lot-chuot-c379</link>
+            <link>https://www.adayroi.com/tai-nghe-may-tinh-c374</link>
+        </links>
+        <lastPageCrawler>
+            <startMark>&lt;nav class=&quot;Page navigation&quot;&gt;</startMark>
+            <endMark>.product-item_info-text-sale span</endMark>
+            <startFragMent>&lt;nav class=&quot;Page navigation&quot;&gt;</startFragMent>
+            <endFragment>&lt;/section&gt;&lt;div class=&quot;content&quot;&gt;&lt;style&gt;</endFragment>
+        </lastPageCrawler>
+        <dataCrawler>
+            <startMark>&lt;div class=&quot;product-list__container&quot;&gt;</startMark>
+            <endMark>.product-item_info-text-sale span</endMark>
+            <startFragment>&lt;div class=&quot;product-list__container&quot;&gt;</startFragment>
+        </dataCrawler>
+    </page>
+    <page name="thegioigear" domain="https://thegioigear.com">
+        <links>
+            <link>https://thegioigear.com/collections/ban-phim</link>
+            <link>https://thegioigear.com/collections/tai-nghe-choi-game</link>
+            <link>https://thegioigear.com/collections/lot-chuot</link>
+            <link>https://thegioigear.com/collections/chuot</link>
+        </links>
+        <lastPageCrawler>
+            <startMark>&lt;div class=&quot;col-lg-8 col-md-8 col-sm-6 col-xs-12 text-center&quot;&gt;</startMark>
+            <endMark>&lt;div class=&quot;col-lg-2 col-md-2 col-sm-3 hidden-xs&quot;&gt;</endMark>
+        </lastPageCrawler>
+        <dataCrawler>
+            <startMark>&lt;div class=&quot;col-md-12 col-sm-12 col-xs-12 content-product-list&quot;&gt;</startMark>
+            <endMark>&lt;div id=&quot;pagination&quot; class=&quot;&quot;&gt;</endMark>
+        </dataCrawler>
+    </page>
+    <pageSize>
+        20
+    </pageSize>
+</crawlerRef>

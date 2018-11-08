@@ -21,7 +21,7 @@ import util.CrawlerUtil;
 public class ADayRoiCrawler extends BaseCrawler implements Runnable {
     
     private String url;
-    private String domain = AppConstant.urlADayRoi;
+    private String domain = AppConstant.ADayRoiDomain;
 
     public ADayRoiCrawler(String url) {
         this.url = url;
@@ -32,8 +32,8 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
         try {
             reader = getBufferReaderForURL(url);
             String fragment = getHtmlFragment(reader, 
-                    "<div class=\"product-list__container\">", 
-                    ".product-item_info-text-sale span");
+                    AppConstant.ADayRoiCrawlerStartMark, 
+                    AppConstant.ADayRoiCrawlerEndMark);
             staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(ADayRoiCrawler.class.getName()).log(Level.SEVERE, url, ex);
@@ -53,7 +53,7 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
     @Override
     protected void staxParserForDocument(String document)
             throws UnsupportedEncodingException, XMLStreamException {
-        String startDocument = "<div class=\"product-list__container\">";
+        String startDocument = AppConstant.ADayRoiCrawlerStartFragment;
         document = document.trim()
                 .substring(document.indexOf(startDocument) + startDocument.length(), document.length())
                 .replaceAll("&", "&amp;")

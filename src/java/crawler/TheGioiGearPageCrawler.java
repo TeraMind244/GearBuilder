@@ -11,6 +11,7 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
+import util.AppConstant;
 import util.CrawlerUtil;
 
 public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
@@ -27,8 +28,8 @@ public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
         try {
             reader = getBufferReaderForURL(url);
             String fragment = getHtmlFragment(reader, 
-                    "<div class=\"col-lg-8 col-md-8 col-sm-6 col-xs-12 text-center\">", 
-                    "<div class=\"col-lg-2 col-md-2 col-sm-3 hidden-xs\">");
+                    AppConstant.TheGioiGearPageCrawlerStartMark, 
+                    AppConstant.TheGioiGearPageCrawlerEndMark);
             staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(TheGioiGearCrawler.class.getName()).log(Level.SEVERE, null, ex);

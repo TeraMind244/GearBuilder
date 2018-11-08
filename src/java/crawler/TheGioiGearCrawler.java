@@ -21,7 +21,7 @@ import util.CrawlerUtil;
 public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
 
     private String url;
-    private String domain = AppConstant.urlTheGioiGear;
+    private String domain = AppConstant.TheGioiGearDomain;
     
     public TheGioiGearCrawler(String url) {
         this.url = url;
@@ -32,8 +32,8 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
         try {
             reader = getBufferReaderForURL(url);
             String fragment = getHtmlFragment(reader, 
-                    "<div class=\"col-md-12 col-sm-12 col-xs-12 content-product-list\">", 
-                    "<div id=\"pagination\" class=\"\">");
+                    AppConstant.TheGioiGearCrawlerStartMark, 
+                    AppConstant.TheGioiGearCrawlerEndMark);
             staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(TheGioiGearCrawler.class.getName()).log(Level.SEVERE, null, ex);
