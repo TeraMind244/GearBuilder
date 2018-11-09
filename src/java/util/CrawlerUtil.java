@@ -92,7 +92,7 @@ public class CrawlerUtil {
         
         gearName = toRawString(gearName.toLowerCase());
         
-        if (gearName.contains("combo")) {
+        if (gearName.contains("combo") || gearName.contains("bo phim chuot")) {
             return other;
         }
 

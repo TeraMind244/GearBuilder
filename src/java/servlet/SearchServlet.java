@@ -42,7 +42,7 @@ public class SearchServlet extends HttpServlet {
                 SearchGearView gearsView = dao.getAllGear(filter, page);
 
                 if (gearsView.getGears() != null) {
-                    request.setAttribute("GEARS", gearsView.getGears());
+                    request.setAttribute("GEARS", gearsView.getGears().getGearList());
                     request.setAttribute("GEARCOUNT", gearsView.getResultCount());
                     request.setAttribute("PAGE", page);
                     request.setAttribute("MAXPAGE", gearsView.getMaxPage());

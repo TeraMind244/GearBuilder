@@ -13,9 +13,8 @@ import util.AppConstant;
 public class MagicalMainCrawler {
     
     public static void main(String[] args) {
-        CrawlerDomRef crawlerDomRefReader = new CrawlerDomRef();
         try {
-            crawlerDomRefReader.readXMLRefFile();
+            CrawlerDomRef.readXMLRefFile("web/xml/crawlerRef.xml");
         } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException ex) {
             Logger.getLogger(MagicalMainCrawler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -28,28 +27,6 @@ public class MagicalMainCrawler {
             Thread crawler = new Thread(new TheGioiGearPageCrawler(link));
             crawler.start();
         }
-        
-//        String[] cate = {
-//            "https://www.adayroi.com/chuot-may-tinh-c378", 
-//            "https://www.adayroi.com/ban-phim-c377", 
-//            "https://www.adayroi.com/mieng-lot-chuot-c379",
-//            "Stringhttps://www.adayroi.com/tai-nghe-may-tinh-c374"
-//        };
-//        for (String url : cate) {
-//            Thread crawler = new Thread(new ADayRoiPageCrawler(url));
-//            crawler.start();
-//        }
-
-//        String[] cate1 = {
-//            "https://thegioigear.com/collections/ban-phim", 
-//            "https://thegioigear.com/collections/tai-nghe-choi-game", 
-//            "https://thegioigear.com/collections/lot-chuot",
-//            "https://thegioigear.com/collections/chuot"
-//        };
-//        for (String url : cate1) {
-//            Thread crawler = new Thread(new TheGioiGearPageCrawler(url));
-//            crawler.start();
-//        }
     }
     
 }

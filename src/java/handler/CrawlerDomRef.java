@@ -3,6 +3,8 @@ package handler;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,9 +19,6 @@ import org.xml.sax.SAXException;
 import util.AppConstant;
 
 public class CrawlerDomRef {
-    
-    public CrawlerDomRef() {
-    }
     
     public static String getTextWithXpath(XPath xpath, Node node, String expression)
             throws XPathExpressionException {
@@ -81,11 +80,11 @@ public class CrawlerDomRef {
         AppConstant.TheGioiGearDomain = getTextWithXpath(xpath, doc, "//page[@name='thegioigear']/attribute::domain");
     }
     
-    public static void readXMLRefFile()
+    public static void readXMLRefFile(String refFilePath)
             throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        File f = new File("web/xml/crawlerRef.xml");
+        File f = new File(refFilePath);
         Document doc = builder.parse(f);
 
         XPathFactory xpFactory = XPathFactory.newInstance();
@@ -95,6 +94,16 @@ public class CrawlerDomRef {
         getCrawlerMarks(xpath, doc);
         getPageSize(xpath, doc);
         getDomains(xpath, doc);
+    }
+    
+    public static void main(String[] args) {
+        try {
+            readXMLRefFile("web/xml/crawlerRef.xml");
+            System.out.println(AppConstant.pageSize);
+        } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException ex) {
+            Logger.getLogger(CrawlerDomRef.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
 }
