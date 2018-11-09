@@ -62,13 +62,19 @@ function getAllParam() {
     return param;
 }
 
-function buildGearSet() {
+function buildGearSet(btn) {
+    btn.disabled = true;
     var error = errorMsg.innerHTML;
     if (error) {
         return;
     } else {
         var params = getAllParam();
-//        console.log("/build" + params);
         location.href = "/GearBuilder/build" + params;
+    }
+}
+
+function build() {
+    if (event.keyCode === 13) {
+        buildGearSet(document.getElementById("btnBuild"));
     }
 }

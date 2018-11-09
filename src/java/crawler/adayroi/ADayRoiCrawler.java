@@ -21,12 +21,11 @@ import util.constant.ADayRoiConstant;
 
 public class ADayRoiCrawler extends BaseCrawler implements Runnable {
     
-    private String url;
     private String defaultType;
     private String domain = ADayRoiConstant.ADayRoiDomain;
 
     public ADayRoiCrawler(String url, String defaultType) {
-        this.url = url;
+        super(url);
         this.defaultType = defaultType;
     }
     

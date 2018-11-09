@@ -21,12 +21,11 @@ import util.constant.TheGioiGearConstant;
 
 public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
 
-    private String url;
     private String defaultType;
     private String domain = TheGioiGearConstant.TheGioiGearDomain;
     
     public TheGioiGearCrawler(String url, String defaultType) {
-        this.url = url;
+        super(url);
         this.defaultType = defaultType;
     }
     

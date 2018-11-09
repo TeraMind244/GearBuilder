@@ -13,8 +13,8 @@
         <h1>Gear Builder</h1>
         <a href="search">Back to search page!</a>
         <div id="search--div">
-            Số tiền: <input type="number" name="txtMoney" value="${param.txtMoney}" oninput="validateInput()" onchange="validateInput()" />
-            <button name="btAction" value="build" onclick="buildGearSet()" >Build</button>
+            Số tiền: <input type="number" name="txtMoney" value="${param.txtMoney}" onkeydown="build()" oninput="validateInput()" onchange="validateInput()" />
+            <button id="btnBuild" value="build" onclick="buildGearSet(this)" >Build</button>
             <br/>
             <a href="#" onclick="toggleAdvancedSearch()" >Nâng cao</a>
             <br/>

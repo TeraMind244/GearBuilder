@@ -95,15 +95,16 @@ public class CrawlerUtil {
         if (gearName.contains("combo") || gearName.contains("bo phim chuot") 
                 || gearName.contains("tang") || gearName.contains("gamepad")
                 || gearName.contains("bo ban phim") || gearName.contains("bang ve")
-                || gearName.contains("bang hat sang")) {
+                || gearName.contains("bang hat sang") || gearName.contains("numpad")
+                || gearName.contains("bo chuot")) {
             return other;
         }
 
-        if (gearName.contains("pad") || gearName.contains("lot chuot") || gearName.contains("ban di")) {
-            return pad;
-        }
         if (gearName.contains("ban phim")) {
             return keyboard;
+        }
+        if (gearName.contains("pad") || gearName.contains("lot chuot") || gearName.contains("ban di")) {
+            return pad;
         }
         if (gearName.contains("chuot") || gearName.contains("mouse") || gearName.contains("optical")) {
             return mouse;

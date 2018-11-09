@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
+import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.stream.XMLEventReader;
@@ -17,13 +18,14 @@ import util.constant.ADayRoiConstant;
 
 public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
 
-    private String url;
     private String defaultType;
     private int lastPage;
+    private ExecutorService pool;
     
-    public ADayRoiPageCrawler(String url, String defaultType) {
-        this.url = url;
+    public ADayRoiPageCrawler(String url, String defaultType, ExecutorService pool) {
+        super(url);
         this.defaultType = defaultType;
+        this.pool = pool;
     }
 
     public void getLastPage(String url) {
@@ -35,13 +37,13 @@ public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
                     ADayRoiConstant.ADayRoiPageCrawlerEndMark);
             staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
-            Logger.getLogger(ADayRoiPageCrawler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ADayRoiPageCrawler.class.getName()).log(Level.SEVERE, url, ex);
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(ADayRoiPageCrawler.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ADayRoiPageCrawler.class.getName()).log(Level.SEVERE, url, ex);
                 }
             }
         }
@@ -90,7 +92,7 @@ public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
         for (int i = 0; i <= lastPage; i++) {
             String pageUrl = url + "?page=" + i;
             Thread dataCrawler = new Thread(new ADayRoiCrawler(pageUrl, defaultType));
-            dataCrawler.start();
+            pool.execute(dataCrawler);
         }
     }
     

@@ -21,12 +21,11 @@ import util.CrawlerUtil;
 
 public class PlayZoneCrawler extends BaseCrawler implements Runnable {
     
-    private String url;
     private String defaultType;
     private String domain = "https://www.playzone.vn";
     
     public PlayZoneCrawler(String url, String defaultType) {
-        this.url = url;
+        super(url);
         this.defaultType = defaultType;
     }
     

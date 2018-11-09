@@ -16,6 +16,10 @@
         <servlet-name>BuilderServlet</servlet-name>
         <servlet-class>servlet.BuilderServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CrawlerServlet</servlet-name>
+        <servlet-class>servlet.CrawlerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/search</url-pattern>
@@ -27,6 +31,10 @@
     <servlet-mapping>
         <servlet-name>BuilderServlet</servlet-name>
         <url-pattern>/build</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CrawlerServlet</servlet-name>
+        <url-pattern>/admin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

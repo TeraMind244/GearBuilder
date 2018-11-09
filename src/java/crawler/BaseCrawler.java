@@ -26,7 +26,10 @@ import javax.xml.stream.events.XMLEvent;
 
 public abstract class BaseCrawler {
     
-    public BaseCrawler() {
+    protected String url;
+    
+    public BaseCrawler(String url) {
+        this.url = url;
     }
     
     protected BufferedReader getBufferReaderForURL(String urlString)
@@ -72,7 +75,6 @@ public abstract class BaseCrawler {
                     break;
                 }
             } catch (Exception ex) {
-//                ex.printStackTrace();
                 break;
             }
             
