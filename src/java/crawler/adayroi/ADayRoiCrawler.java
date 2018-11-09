@@ -19,7 +19,7 @@ import javax.xml.stream.events.XMLEvent;
 import util.CrawlerUtil;
 import util.constant.ADayRoiConstant;
 
-public class ADayRoiCrawler extends BaseCrawler implements Runnable {
+public class ADayRoiCrawler extends BaseCrawler {
     
     private String defaultType;
     private String domain = ADayRoiConstant.ADayRoiDomain;
@@ -160,7 +160,9 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
 
     @Override
     public void run() {
+        createThread();
         getHtml(url);
+        finishCrawl();
     }
     
 }

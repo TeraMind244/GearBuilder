@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
-import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.stream.XMLEventReader;
@@ -16,16 +15,14 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import util.CrawlerUtil;
 
-public class PlayZonePageCrawler extends BaseCrawler implements Runnable {
+public class PlayZonePageCrawler extends BaseCrawler {
 
     private String defaultType;
     private int lastPage;
-    private ExecutorService pool;
     
-    public PlayZonePageCrawler(String url, String defaultType, ExecutorService pool) {
+    public PlayZonePageCrawler(String url, String defaultType) {
         super(url);
         this.defaultType = defaultType;
-        this.pool = pool;
     }
     
     public void getLastPage(String url) {
@@ -78,12 +75,14 @@ public class PlayZonePageCrawler extends BaseCrawler implements Runnable {
 
     @Override
     public void run() {
+        createThread();
         getLastPage(url);
         for (int i = 0; i < lastPage; i++) {
             String pageUrl = url + "?page=" + (i + 1);
             Thread dataCrawler = new Thread(new PlayZoneCrawler(pageUrl, defaultType));
-            pool.execute(dataCrawler);
+            BaseCrawler.getPool().execute(dataCrawler);
         }
+        finishPageCrawler();
     }
     
 }

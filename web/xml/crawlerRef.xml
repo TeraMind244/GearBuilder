@@ -23,9 +23,9 @@
     <page name="thegioigear" domain="https://thegioigear.com">
         <links>
             <link type="chuot">https://thegioigear.com/collections/chuot</link>
-            <link type="ban-phim">https://thegioigear.com/collections/ban-phim</link>
+<!--            <link type="ban-phim">https://thegioigear.com/collections/ban-phim</link>
             <link type="lot-chuot">https://thegioigear.com/collections/lot-chuot</link>
-            <link type="tai-nghe">https://thegioigear.com/collections/tai-nghe-choi-game</link>
+            <link type="tai-nghe">https://thegioigear.com/collections/tai-nghe-choi-game</link>-->
         </links>
         <lastPageCrawler>
             <startMark>&lt;div class=&quot;col-lg-8 col-md-8 col-sm-6 col-xs-12 text-center&quot;&gt;</startMark>

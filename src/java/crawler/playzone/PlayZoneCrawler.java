@@ -19,7 +19,7 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import util.CrawlerUtil;
 
-public class PlayZoneCrawler extends BaseCrawler implements Runnable {
+public class PlayZoneCrawler extends BaseCrawler {
     
     private String defaultType;
     private String domain = "https://www.playzone.vn";
@@ -143,7 +143,6 @@ public class PlayZoneCrawler extends BaseCrawler implements Runnable {
                         productTitleMark = 0;
                     }
                 }
-                
                 endTagMark--;
             }
         }
@@ -151,7 +150,9 @@ public class PlayZoneCrawler extends BaseCrawler implements Runnable {
 
     @Override
     public void run() {
+        createThread();
         getHtml(url);
+        finishCrawl();
     }
     
 }

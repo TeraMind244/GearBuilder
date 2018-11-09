@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
-import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.stream.XMLEventReader;
@@ -16,16 +15,14 @@ import javax.xml.stream.events.XMLEvent;
 import util.CrawlerUtil;
 import util.constant.TheGioiGearConstant;
 
-public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
+public class TheGioiGearPageCrawler extends BaseCrawler {
 
     private String defaultType;
     private int lastPage;
-    private ExecutorService pool;
     
-    public TheGioiGearPageCrawler(String url, String defaultType, ExecutorService pool) {
+    public TheGioiGearPageCrawler(String url, String defaultType) {
         super(url);
         this.defaultType = defaultType;
-        this.pool = pool;
     }
     
     public void getLastPage(String url) {
@@ -77,12 +74,14 @@ public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
 
     @Override
     public void run() {
+        createThread();
         getLastPage(url);
         for (int i = 0; i <= lastPage; i++) {
             String pageUrl = url + "?page=" + i;
             Thread dataCrawler = new Thread(new TheGioiGearCrawler(pageUrl, defaultType));
-            pool.execute(dataCrawler);
+            BaseCrawler.getPool().execute(dataCrawler);
         }
+        finishPageCrawler();
     }
     
 }

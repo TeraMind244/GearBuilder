@@ -19,7 +19,7 @@ import javax.xml.stream.events.XMLEvent;
 import util.CrawlerUtil;
 import util.constant.TheGioiGearConstant;
 
-public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
+public class TheGioiGearCrawler extends BaseCrawler {
 
     private String defaultType;
     private String domain = TheGioiGearConstant.TheGioiGearDomain;
@@ -162,7 +162,9 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
 
     @Override
     public void run() {
+        createThread();
         getHtml(url);
+        finishCrawl();
     }
     
 }

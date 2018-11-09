@@ -15,6 +15,9 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -23,19 +26,35 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
+import org.hibernate.SessionFactory;
+import util.HibernateUtil;
 
-public abstract class BaseCrawler {
+public abstract class BaseCrawler implements Runnable {
     
     protected String url;
+    private static ExecutorService pool;
+    private static int THREAD_POOL_COUNT = 0;
+    private final static Object LOCK = new Object();
+    
+    static {
+        pool = Executors.newFixedThreadPool(8);
+    }
     
     public BaseCrawler(String url) {
         this.url = url;
     }
+
+    public synchronized static ExecutorService getPool() {
+        if (pool == null) {
+            pool = Executors.newFixedThreadPool(8);
+        }
+        return pool;
+    }
     
     protected BufferedReader getBufferReaderForURL(String urlString)
             throws MalformedURLException, IOException, UnsupportedEncodingException {
-        URL url = new URL(urlString);
-        URLConnection connection = url.openConnection();
+        URL urlLink = new URL(urlString);
+        URLConnection connection = urlLink.openConnection();
         connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Window NT 6.1; Win64; x64)");
         InputStream is = connection.getInputStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
@@ -126,6 +145,47 @@ public abstract class BaseCrawler {
             }
         }
         return document.toString();
+    }
+    
+    public void createThread() {
+        synchronized (LOCK) {
+            THREAD_POOL_COUNT++;
+        }
+    }
+    
+    public void finishPageCrawler() {
+        synchronized (LOCK) {
+            THREAD_POOL_COUNT--;
+        }
+    }
+    
+    public void finishCrawl() {
+        synchronized (LOCK) {
+            THREAD_POOL_COUNT--;
+            if (THREAD_POOL_COUNT == 0) {
+                System.out.println("Finish all crawler!!!");
+                SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+                if(!sessionFactory.isClosed()){
+                    sessionFactory.close();
+                }
+                shutdownAndAwaitTermination(pool);
+            }
+        }
+    }
+    
+    public void shutdownAndAwaitTermination(ExecutorService pool) {
+        pool.shutdown();
+        try {
+            if (!pool.awaitTermination(10, TimeUnit.SECONDS)) {
+                pool.shutdownNow();
+                if (!pool.awaitTermination(10, TimeUnit.SECONDS)) {
+                    System.err.println("Pool did not terminate");
+                }
+            }
+        } catch (InterruptedException ex) {
+            pool.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
     }
     
 }

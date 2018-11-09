@@ -16,16 +16,14 @@ import javax.xml.stream.events.XMLEvent;
 import util.CrawlerUtil;
 import util.constant.ADayRoiConstant;
 
-public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
+public class ADayRoiPageCrawler extends BaseCrawler {
 
     private String defaultType;
     private int lastPage;
-    private ExecutorService pool;
     
-    public ADayRoiPageCrawler(String url, String defaultType, ExecutorService pool) {
+    public ADayRoiPageCrawler(String url, String defaultType) {
         super(url);
         this.defaultType = defaultType;
-        this.pool = pool;
     }
 
     public void getLastPage(String url) {
@@ -88,12 +86,14 @@ public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
 
     @Override
     public void run() {
+        createThread();
         getLastPage(url);
         for (int i = 0; i <= lastPage; i++) {
             String pageUrl = url + "?page=" + i;
             Thread dataCrawler = new Thread(new ADayRoiCrawler(pageUrl, defaultType));
-            pool.execute(dataCrawler);
+            BaseCrawler.getPool().execute(dataCrawler);
         }
+        finishPageCrawler();
     }
     
 }
