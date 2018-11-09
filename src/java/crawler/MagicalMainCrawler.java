@@ -20,11 +20,13 @@ public class MagicalMainCrawler {
         }
         
         for (String link : AppConstant.ADayRoiLinks) {
-            Thread crawler = new Thread(new ADayRoiPageCrawler(link));
+            String[] urlAndType = link.split(";");
+            Thread crawler = new Thread(new ADayRoiPageCrawler(urlAndType[0], urlAndType[1]));
             crawler.start();
         }
         for (String link : AppConstant.TheGioiGearLinks) {
-            Thread crawler = new Thread(new TheGioiGearPageCrawler(link));
+            String[] urlAndType = link.split(";");
+            Thread crawler = new Thread(new TheGioiGearPageCrawler(urlAndType[0], urlAndType[1]));
             crawler.start();
         }
     }

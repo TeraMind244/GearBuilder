@@ -19,7 +19,7 @@ public class AppListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
-            System.out.println("Context is initialed!!!");
+            System.out.println("App is started!!!");
             String pathToXML = sce.getServletContext().getRealPath("/") + "xml/crawlerRef.xml";
             CrawlerDomRef.readXMLRefFile(pathToXML);
         } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException ex) {

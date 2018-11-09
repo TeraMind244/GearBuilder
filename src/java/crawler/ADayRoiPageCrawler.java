@@ -17,10 +17,12 @@ import util.CrawlerUtil;
 public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
 
     private String url;
+    private String defaultType;
     private int lastPage;
     
-    public ADayRoiPageCrawler(String url) {
+    public ADayRoiPageCrawler(String url, String defaultType) {
         this.url = url;
+        this.defaultType = defaultType;
     }
 
     public void getLastPage(String url) {
@@ -86,7 +88,7 @@ public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
         getLastPage(url);
         for (int i = 0; i <= lastPage; i++) {
             String pageUrl = url + "?page=" + i;
-            Thread dataCrawler = new Thread(new ADayRoiCrawler(pageUrl));
+            Thread dataCrawler = new Thread(new ADayRoiCrawler(pageUrl, defaultType));
             dataCrawler.start();
         }
     }

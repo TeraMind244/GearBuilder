@@ -21,10 +21,12 @@ import util.CrawlerUtil;
 public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
 
     private String url;
+    private String defaultType;
     private String domain = AppConstant.TheGioiGearDomain;
     
-    public TheGioiGearCrawler(String url) {
+    public TheGioiGearCrawler(String url, String defaultType) {
         this.url = url;
+        this.defaultType = defaultType;
     }
     
     public void getHtml(String url) {
@@ -121,7 +123,7 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
                     price = CrawlerUtil.convertToPrice(text);
                 } else if (productNameMark > 0) {
                     productName = text;
-                    type = CrawlerUtil.categorizeType(productName);
+                    type = CrawlerUtil.categorizeType(productName, defaultType);
                 }
             } else if (event.isEndElement()) {
                 EndElement endElement = event.asEndElement();

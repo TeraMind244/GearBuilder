@@ -83,7 +83,7 @@ public class CrawlerUtil {
         return Integer.parseInt(newStr);
     }
     
-    public static String categorizeType(String gearName) {
+    public static String categorizeType(String gearName, String defaultType) {
         String mouse = "chuot";
         String keyboard = "ban-phim";
         String pad = "pad";
@@ -92,12 +92,12 @@ public class CrawlerUtil {
         
         gearName = toRawString(gearName.toLowerCase());
         
-        if (gearName.contains("combo") || gearName.contains("bo phim chuot")) {
+        if (gearName.contains("combo") || gearName.contains("bo phim chuot") 
+                || gearName.contains("tang") || gearName.contains("gamepad")) {
             return other;
         }
 
-        if ((gearName.contains("pad") || gearName.contains("lot chuot") || gearName.contains("ban di")) 
-                && !gearName.contains("tang") && !gearName.contains("gamepad")) {
+        if (gearName.contains("pad") || gearName.contains("lot chuot") || gearName.contains("ban di")) {
             return pad;
         }
         if (gearName.contains("ban phim")) {
@@ -110,7 +110,7 @@ public class CrawlerUtil {
             return headset;
         }
         
-        return other;
+        return defaultType;
     }
     
     public static String getUrl(String url, String domain) {

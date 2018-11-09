@@ -1,6 +1,8 @@
 
 package handler;
 
+import crawler.ADayRoiPageCrawler;
+import crawler.TheGioiGearPageCrawler;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -41,12 +43,14 @@ public class CrawlerDomRef {
         NodeList aDayRoiLinks = getNodeListWithXpath(xpath, doc, "//page[@name='adayroi']//link");
         for (int i = 0; i < aDayRoiLinks.getLength(); i++) {
             Node link = aDayRoiLinks.item(i);
-            AppConstant.ADayRoiLinks.add(link.getTextContent());
+            String type = getTextWithXpath(xpath, link, "@type");
+            AppConstant.ADayRoiLinks.add(link.getTextContent() + ";" + type);
         }
         NodeList theGioiGearLinks = getNodeListWithXpath(xpath, doc, "//page[@name='thegioigear']//link");
         for (int i = 0; i < theGioiGearLinks.getLength(); i++) {
             Node link = theGioiGearLinks.item(i);
-            AppConstant.TheGioiGearLinks.add(link.getTextContent());
+            String type = getTextWithXpath(xpath, link, "@type");
+            AppConstant.TheGioiGearLinks.add(link.getTextContent() + ";" + type);
         }
     }
     
@@ -99,7 +103,12 @@ public class CrawlerDomRef {
     public static void main(String[] args) {
         try {
             readXMLRefFile("web/xml/crawlerRef.xml");
-            System.out.println(AppConstant.pageSize);
+            for (String link : AppConstant.ADayRoiLinks) {
+                System.out.println(link);
+            }
+            for (String link : AppConstant.TheGioiGearLinks) {
+                System.out.println(link);
+            }
         } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException ex) {
             Logger.getLogger(CrawlerDomRef.class.getName()).log(Level.SEVERE, null, ex);
         }
