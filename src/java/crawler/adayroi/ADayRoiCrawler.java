@@ -40,8 +40,6 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
             staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(ADayRoiCrawler.class.getName()).log(Level.SEVERE, url, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ADayRoiCrawler.class.getName()).log(Level.SEVERE, url, ex);
         } finally {
             if (reader != null) {
                 try {
@@ -145,12 +143,14 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
                         productName = "";
                         price = 0;
                         type = "";
-                    } else if (endTagMark == productPriceMark) {
-                        productPriceMark = 0;
                     }
                 } else if ("a".equals(tagName)) {
                     if (endTagMark == productTitleMark) {
                         productTitleMark = 0;
+                    }
+                } else if ("span".equals(tagName)) {
+                    if (endTagMark == productPriceMark) {
+                        productPriceMark = 0;
                     }
                 }
                 endTagMark--;

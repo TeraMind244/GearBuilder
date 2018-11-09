@@ -40,8 +40,6 @@ public class PlayZoneCrawler extends BaseCrawler implements Runnable {
             staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(ADayRoiCrawler.class.getName()).log(Level.SEVERE, url, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ADayRoiCrawler.class.getName()).log(Level.SEVERE, url, ex);
         } finally {
             if (reader != null) {
                 try {

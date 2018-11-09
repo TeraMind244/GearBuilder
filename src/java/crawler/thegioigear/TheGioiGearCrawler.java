@@ -16,7 +16,6 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import util.constant.AppConstant;
 import util.CrawlerUtil;
 import util.constant.TheGioiGearConstant;
 
@@ -40,13 +39,13 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
                     TheGioiGearConstant.TheGioiGearCrawlerEndMark);
             staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
-            Logger.getLogger(TheGioiGearCrawler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TheGioiGearCrawler.class.getName()).log(Level.SEVERE, url, ex);
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(TheGioiGearCrawler.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TheGioiGearCrawler.class.getName()).log(Level.SEVERE, url, ex);
                 }
             }
         }
