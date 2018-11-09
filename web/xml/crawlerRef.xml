@@ -36,6 +36,24 @@
             <endMark>&lt;div id=&quot;pagination&quot; class=&quot;&quot;&gt;</endMark>
         </dataCrawler>
     </page>
+    <page name="playzone" domain="https://www.playzone.vn">
+        <links>
+            <link type="chuot">https://www.playzone.vn/gaming-gears/chuot</link>
+            <link type="ban-phim">https://www.playzone.vn/gaming-gears/ban-phim</link>
+            <link type="pad">https://www.playzone.vn/gaming-gears/ban-di-chuot</link>
+            <link type="tai-nghe">https://www.playzone.vn/gaming-gears/tai-nghe</link>
+        </links>
+        <lastPageCrawler>
+            <startMark>&lt;div class=&quot;bottom_buttons pagination_holder&quot;&gt;</startMark>
+            <endMark>// Equal height on product items</endMark>
+            <startFragMent>&lt;div class=&quot;bottom_buttons pagination_holder&quot;&gt;</startFragMent>
+        </lastPageCrawler>
+        <dataCrawler>
+            <startMark>&lt;div id=&quot;main&quot;</startMark>
+            <endMark>// Equal height on product items</endMark>
+            <startFragment>&lt;div id=&quot;main&quot;</startFragment>
+        </dataCrawler>
+    </page>
     <pageSize>
         20
     </pageSize>

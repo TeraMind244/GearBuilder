@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import util.AppConstant;
+import util.constant.AppConstant;
 
 public class GearDAO implements Serializable {
     

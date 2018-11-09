@@ -1,6 +1,7 @@
 
-package crawler;
+package crawler.adayroi;
 
+import crawler.BaseCrawler;
 import gear.GearDAO;
 import generated.gear.Gear;
 import java.io.BufferedReader;
@@ -15,14 +16,14 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import util.AppConstant;
 import util.CrawlerUtil;
+import util.constant.ADayRoiConstant;
 
 public class ADayRoiCrawler extends BaseCrawler implements Runnable {
     
     private String url;
     private String defaultType;
-    private String domain = AppConstant.ADayRoiDomain;
+    private String domain = ADayRoiConstant.ADayRoiDomain;
 
     public ADayRoiCrawler(String url, String defaultType) {
         this.url = url;
@@ -34,8 +35,8 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
         try {
             reader = getBufferReaderForURL(url);
             String fragment = getHtmlFragment(reader, 
-                    AppConstant.ADayRoiCrawlerStartMark, 
-                    AppConstant.ADayRoiCrawlerEndMark);
+                    ADayRoiConstant.ADayRoiCrawlerStartMark, 
+                    ADayRoiConstant.ADayRoiCrawlerEndMark);
             staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(ADayRoiCrawler.class.getName()).log(Level.SEVERE, url, ex);
@@ -55,7 +56,7 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
     @Override
     protected void staxParserForDocument(String document)
             throws UnsupportedEncodingException, XMLStreamException {
-        String startDocument = AppConstant.ADayRoiCrawlerStartFragment;
+        String startDocument = ADayRoiConstant.ADayRoiCrawlerStartFragment;
         document = document.trim()
                 .substring(document.indexOf(startDocument) + startDocument.length(), document.length())
                 .replaceAll("&", "&amp;")
@@ -135,6 +136,7 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
                             int hashStr = CrawlerUtil.hashingString(productUrl);
                             Gear gear = new Gear(hashStr, productName, source, productUrl, imgUrl, price, type);
                             GearDAO.getInstance().saveGear(gear);
+//                            System.out.println("Save " + gear.getType() + ": " + gear.getGearName() + " - " + url);
 //                            System.out.println("Product{name: " + productName + ", imgUrl: " + imgUrl + ", productUrl: " + productUrl + ", price: " + price + "k}");
                         }
                         productStartMark = 0;
@@ -142,9 +144,8 @@ public class ADayRoiCrawler extends BaseCrawler implements Runnable {
                         imgUrl = "";
                         productName = "";
                         price = 0;
-                    }
-                } else if ("span".equals(tagName)) {
-                    if (endTagMark == productPriceMark) {
+                        type = "";
+                    } else if (endTagMark == productPriceMark) {
                         productPriceMark = 0;
                     }
                 } else if ("a".equals(tagName)) {

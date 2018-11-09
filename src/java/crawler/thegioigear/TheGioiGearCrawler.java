@@ -1,6 +1,7 @@
 
-package crawler;
+package crawler.thegioigear;
 
+import crawler.BaseCrawler;
 import gear.GearDAO;
 import generated.gear.Gear;
 import java.io.BufferedReader;
@@ -15,14 +16,15 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import util.AppConstant;
+import util.constant.AppConstant;
 import util.CrawlerUtil;
+import util.constant.TheGioiGearConstant;
 
 public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
 
     private String url;
     private String defaultType;
-    private String domain = AppConstant.TheGioiGearDomain;
+    private String domain = TheGioiGearConstant.TheGioiGearDomain;
     
     public TheGioiGearCrawler(String url, String defaultType) {
         this.url = url;
@@ -34,8 +36,8 @@ public class TheGioiGearCrawler extends BaseCrawler implements Runnable {
         try {
             reader = getBufferReaderForURL(url);
             String fragment = getHtmlFragment(reader, 
-                    AppConstant.TheGioiGearCrawlerStartMark, 
-                    AppConstant.TheGioiGearCrawlerEndMark);
+                    TheGioiGearConstant.TheGioiGearCrawlerStartMark, 
+                    TheGioiGearConstant.TheGioiGearCrawlerEndMark);
             staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(TheGioiGearCrawler.class.getName()).log(Level.SEVERE, null, ex);

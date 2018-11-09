@@ -1,6 +1,9 @@
 
-package crawler;
+package crawler.playzone;
 
+import crawler.BaseCrawler;
+import crawler.adayroi.ADayRoiCrawler;
+import crawler.adayroi.ADayRoiPageCrawler;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -11,16 +14,16 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import util.AppConstant;
+import util.constant.AppConstant;
 import util.CrawlerUtil;
 
-public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
+public class PlayZonePageCrawler extends BaseCrawler implements Runnable {
 
     private String url;
     private String defaultType;
     private int lastPage;
     
-    public TheGioiGearPageCrawler(String url, String defaultType) {
+    public PlayZonePageCrawler(String url, String defaultType) {
         this.url = url;
         this.defaultType = defaultType;
     }
@@ -30,26 +33,30 @@ public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
         try {
             reader = getBufferReaderForURL(url);
             String fragment = getHtmlFragment(reader, 
-                    AppConstant.TheGioiGearPageCrawlerStartMark, 
-                    AppConstant.TheGioiGearPageCrawlerEndMark);
+                    "<div class=\"bottom_buttons pagination_holder\">", 
+                    "// Equal height on product items");
             staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
-            Logger.getLogger(TheGioiGearCrawler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ADayRoiPageCrawler.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(TheGioiGearCrawler.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ADayRoiPageCrawler.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
     }
-
+    
     @Override
     protected void staxParserForDocument(String document)
             throws UnsupportedEncodingException, XMLStreamException {
-        document = document.trim().replaceAll("&hellip;", "");
+        String startDocument = "<div class=\"bottom_buttons pagination_holder\">";
+        document = document.trim()
+                .substring(document.indexOf(startDocument), document.length())
+                .replaceAll("&page", "&amp;page")
+                .replaceAll("&nbsp;", "");
         XMLEventReader eventReader = parseStringToXMLEventReader(document);
         Iterator<XMLEvent> events = autoAddMissingTag(eventReader);
         
@@ -62,10 +69,7 @@ public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
                 String tagName = startElement.getName().getLocalPart();
                 
                 if ("a".equals(tagName)) {
-                    String attrHref = getAttribute(startElement, "href");
-                    if (attrHref.length() > 0 && getAttribute(startElement, "class").length() > 0) {
-                        lastPage = CrawlerUtil.getPage(attrHref, "?page=");
-                    }
+                    lastPage = CrawlerUtil.getPage(getAttribute(startElement, "href"), "?page=");
                 }
             }
         }
@@ -75,9 +79,9 @@ public class TheGioiGearPageCrawler extends BaseCrawler implements Runnable {
     @Override
     public void run() {
         getLastPage(url);
-        for (int i = 0; i <= lastPage; i++) {
-            String pageUrl = url + "?page=" + i;
-            Thread dataCrawler = new Thread(new TheGioiGearCrawler(pageUrl, defaultType));
+        for (int i = 0; i < lastPage; i++) {
+            String pageUrl = url + "?page=" + (i + 1);
+            Thread dataCrawler = new Thread(new PlayZoneCrawler(pageUrl, defaultType));
             dataCrawler.start();
         }
     }

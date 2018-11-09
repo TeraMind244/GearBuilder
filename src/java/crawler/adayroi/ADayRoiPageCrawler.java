@@ -1,6 +1,7 @@
 
-package crawler;
+package crawler.adayroi;
 
+import crawler.BaseCrawler;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -11,8 +12,8 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import util.AppConstant;
 import util.CrawlerUtil;
+import util.constant.ADayRoiConstant;
 
 public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
 
@@ -30,8 +31,8 @@ public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
         try {
             reader = getBufferReaderForURL(url);
             String fragment = getHtmlFragment(reader, 
-                    AppConstant.ADayRoiPageCrawlerStartMark, 
-                    AppConstant.ADayRoiPageCrawlerEndMark);
+                    ADayRoiConstant.ADayRoiPageCrawlerStartMark, 
+                    ADayRoiConstant.ADayRoiPageCrawlerEndMark);
             staxParserForDocument(fragment);
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(ADayRoiPageCrawler.class.getName()).log(Level.SEVERE, null, ex);
@@ -49,8 +50,8 @@ public class ADayRoiPageCrawler extends BaseCrawler implements Runnable {
     @Override
     protected void staxParserForDocument(String document)
             throws UnsupportedEncodingException, XMLStreamException {
-        String startDocument = AppConstant.ADayRoiPageCrawlerStartFragment;
-        String endDocument = AppConstant.ADayRoiPageCrawlerEndFragment;
+        String startDocument = ADayRoiConstant.ADayRoiPageCrawlerStartFragment;
+        String endDocument = ADayRoiConstant.ADayRoiPageCrawlerEndFragment;
         if (!document.contains(startDocument)) {
             lastPage = 0;
             System.out.println("URL: " + url + ", Last page: " + lastPage);

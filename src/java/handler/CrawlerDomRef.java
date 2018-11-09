@@ -1,8 +1,6 @@
 
 package handler;
 
-import crawler.ADayRoiPageCrawler;
-import crawler.TheGioiGearPageCrawler;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -18,7 +16,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import util.AppConstant;
+import util.constant.ADayRoiConstant;
+import util.constant.AppConstant;
+import util.constant.PlayZoneConstant;
+import util.constant.TheGioiGearConstant;
 
 public class CrawlerDomRef {
     
@@ -44,32 +45,46 @@ public class CrawlerDomRef {
         for (int i = 0; i < aDayRoiLinks.getLength(); i++) {
             Node link = aDayRoiLinks.item(i);
             String type = getTextWithXpath(xpath, link, "@type");
-            AppConstant.ADayRoiLinks.add(link.getTextContent() + ";" + type);
+            ADayRoiConstant.ADayRoiLinks.add(link.getTextContent() + ";" + type);
         }
         NodeList theGioiGearLinks = getNodeListWithXpath(xpath, doc, "//page[@name='thegioigear']//link");
         for (int i = 0; i < theGioiGearLinks.getLength(); i++) {
             Node link = theGioiGearLinks.item(i);
             String type = getTextWithXpath(xpath, link, "@type");
-            AppConstant.TheGioiGearLinks.add(link.getTextContent() + ";" + type);
+            TheGioiGearConstant.TheGioiGearLinks.add(link.getTextContent() + ";" + type);
+        }
+        NodeList playZoneLinks = getNodeListWithXpath(xpath, doc, "//page[@name='playzone']//link");
+        for (int i = 0; i < playZoneLinks.getLength(); i++) {
+            Node link = playZoneLinks.item(i);
+            String type = getTextWithXpath(xpath, link, "@type");
+            PlayZoneConstant.PlayZoneLinks.add(link.getTextContent() + ";" + type);
         }
     }
     
     public static void getCrawlerMarks(XPath xpath, Node doc)
             throws XPathExpressionException {
-        AppConstant.ADayRoiPageCrawlerStartMark = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/lastPageCrawler/startMark");
-        AppConstant.ADayRoiPageCrawlerEndMark = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/lastPageCrawler/endMark");
-        AppConstant.ADayRoiPageCrawlerStartFragment = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/lastPageCrawler/startFragMent");
-        AppConstant.ADayRoiPageCrawlerEndFragment = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/lastPageCrawler/endFragment");
+        ADayRoiConstant.ADayRoiPageCrawlerStartMark = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/lastPageCrawler/startMark");
+        ADayRoiConstant.ADayRoiPageCrawlerEndMark = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/lastPageCrawler/endMark");
+        ADayRoiConstant.ADayRoiPageCrawlerStartFragment = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/lastPageCrawler/startFragMent");
+        ADayRoiConstant.ADayRoiPageCrawlerEndFragment = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/lastPageCrawler/endFragment");
         
-        AppConstant.ADayRoiCrawlerStartMark = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/dataCrawler/startMark");
-        AppConstant.ADayRoiCrawlerEndMark = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/dataCrawler/endMark");
-        AppConstant.ADayRoiCrawlerStartFragment = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/dataCrawler/startFragment");
+        ADayRoiConstant.ADayRoiCrawlerStartMark = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/dataCrawler/startMark");
+        ADayRoiConstant.ADayRoiCrawlerEndMark = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/dataCrawler/endMark");
+        ADayRoiConstant.ADayRoiCrawlerStartFragment = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/dataCrawler/startFragment");
         
-        AppConstant.TheGioiGearPageCrawlerStartMark = getTextWithXpath(xpath, doc, "//page[@name='thegioigear']/lastPageCrawler/startMark");
-        AppConstant.TheGioiGearPageCrawlerEndMark = getTextWithXpath(xpath, doc, "//page[@name='thegioigear']/lastPageCrawler/endMark");
+        TheGioiGearConstant.TheGioiGearPageCrawlerStartMark = getTextWithXpath(xpath, doc, "//page[@name='thegioigear']/lastPageCrawler/startMark");
+        TheGioiGearConstant.TheGioiGearPageCrawlerEndMark = getTextWithXpath(xpath, doc, "//page[@name='thegioigear']/lastPageCrawler/endMark");
         
-        AppConstant.TheGioiGearCrawlerStartMark = getTextWithXpath(xpath, doc, "//page[@name='thegioigear']/dataCrawler/startMark");
-        AppConstant.TheGioiGearCrawlerEndMark = getTextWithXpath(xpath, doc, "//page[@name='thegioigear']/dataCrawler/endMark");
+        TheGioiGearConstant.TheGioiGearCrawlerStartMark = getTextWithXpath(xpath, doc, "//page[@name='thegioigear']/dataCrawler/startMark");
+        TheGioiGearConstant.TheGioiGearCrawlerEndMark = getTextWithXpath(xpath, doc, "//page[@name='thegioigear']/dataCrawler/endMark");
+        
+        PlayZoneConstant.PlayZonePageCrawlerStartMark = getTextWithXpath(xpath, doc, "//page[@name='playzone']/lastPageCrawler/startMark");
+        PlayZoneConstant.PlayZonePageCrawlerEndMark = getTextWithXpath(xpath, doc, "//page[@name='playzone']/lastPageCrawler/endMark");
+        PlayZoneConstant.PlayZonePageCrawlerStartFragment = getTextWithXpath(xpath, doc, "//page[@name='playzone']/lastPageCrawler/startFragMent");
+        
+        PlayZoneConstant.PlayZoneCrawlerStartMark = getTextWithXpath(xpath, doc, "//page[@name='playzone']/dataCrawler/startMark");
+        PlayZoneConstant.PlayZoneCrawlerEndMark = getTextWithXpath(xpath, doc, "//page[@name='playzone']/dataCrawler/endMark");
+        PlayZoneConstant.PlayZoneCrawlerStartFragment = getTextWithXpath(xpath, doc, "//page[@name='playzone']/dataCrawler/startFragment");
     }
     
     public static void getPageSize(XPath xpath, Node doc)
@@ -80,8 +95,9 @@ public class CrawlerDomRef {
     
     public static void getDomains(XPath xpath, Node doc)
             throws XPathExpressionException {
-        AppConstant.ADayRoiDomain = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/attribute::domain");
-        AppConstant.TheGioiGearDomain = getTextWithXpath(xpath, doc, "//page[@name='thegioigear']/attribute::domain");
+        ADayRoiConstant.ADayRoiDomain = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/attribute::domain");
+        TheGioiGearConstant.TheGioiGearDomain = getTextWithXpath(xpath, doc, "//page[@name='thegioigear']/attribute::domain");
+        PlayZoneConstant.PlayZoneDomain = getTextWithXpath(xpath, doc, "//page[@name='playzone']/attribute::domain");
     }
     
     public static void readXMLRefFile(String refFilePath)
@@ -103,16 +119,19 @@ public class CrawlerDomRef {
     public static void main(String[] args) {
         try {
             readXMLRefFile("web/xml/crawlerRef.xml");
-            for (String link : AppConstant.ADayRoiLinks) {
+            System.out.println(AppConstant.pageSize);
+            for (String link : ADayRoiConstant.ADayRoiLinks) {
                 System.out.println(link);
             }
-            for (String link : AppConstant.TheGioiGearLinks) {
+            for (String link : TheGioiGearConstant.TheGioiGearLinks) {
+                System.out.println(link);
+            }
+            for (String link : PlayZoneConstant.PlayZoneLinks) {
                 System.out.println(link);
             }
         } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException ex) {
             Logger.getLogger(CrawlerDomRef.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
 }

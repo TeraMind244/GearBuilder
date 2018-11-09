@@ -2,6 +2,7 @@
 package crawler;
 
 import com.sun.xml.internal.fastinfoset.stax.events.EndElementEvent;
+import com.sun.xml.internal.stream.events.CharacterEvent;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -71,6 +72,7 @@ public abstract class BaseCrawler {
                     break;
                 }
             } catch (Exception ex) {
+//                ex.printStackTrace();
                 break;
             }
             
@@ -79,6 +81,13 @@ public abstract class BaseCrawler {
                     endTagMarker++;
                 } else if (event.isEndElement()) {
                     endTagMarker--;
+                } else if (event.isCharacters()) {
+                    String str = event.asCharacters().getData().trim();
+                    if (str.length() == 0) {
+                        continue;
+                    } else {
+                        event = new CharacterEvent(str);
+                    }
                 }
                 if (endTagMarker >= 0) {
                     events.add(event);
