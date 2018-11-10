@@ -1,8 +1,8 @@
 const loadingGif = '<div id="loading" ><img src="image/loading.gif" /></div>';
+const domain = getDomain();
 
 function getUrlParam(param) {
-    var url_string = window.location.href;
-    var url = new URL(url_string);
+    var url = new URL(window.location.href);
     return url.searchParams.get(param);
 }
 
@@ -37,4 +37,9 @@ function transform(xml, xsl) {
 
 function pushState(url) {
     history.pushState(null, null, url);
+}
+
+function getDomain() {
+    var url = new URL(window.location.href);
+    return url.origin + url.pathname;
 }
