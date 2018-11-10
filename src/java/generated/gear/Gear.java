@@ -159,7 +159,7 @@ public class Gear implements Serializable {
         }
     }
     
-//        public static void main(String[] args) {
+//    public static void main(String[] args) {
 //        try {
 //            Gear gear = new Gear(3103778, "Razer FireFly", "thegioigear.com", 
 //                    "https://thegioigear.com/collections/lot-chuot/products/firefly", 

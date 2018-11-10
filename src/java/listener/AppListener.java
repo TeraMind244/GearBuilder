@@ -1,7 +1,6 @@
+
 package listener;
 
-
-import crawler.MagicalMainCrawler;
 import handler.CrawlerDomRef;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -22,8 +21,9 @@ public class AppListener implements ServletContextListener {
             System.out.println("App is started!!!");
             String pathToXML = sce.getServletContext().getRealPath("/") + "xml/crawlerRef.xml";
             CrawlerDomRef.readXMLRefFile(pathToXML);
+            System.out.println("Data reference is loaded!!!");
         } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException ex) {
-            Logger.getLogger(MagicalMainCrawler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AppListener.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

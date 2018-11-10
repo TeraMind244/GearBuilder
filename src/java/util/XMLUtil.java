@@ -1,9 +1,13 @@
 
 package util;
 
+import gear.SearchGearView;
 import generated.gear.Gear;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.logging.Level;
@@ -53,6 +57,63 @@ public class XMLUtil {
             Logger.getLogger(XMLUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
         return sw.toString();
+    }
+    
+    public static String marshall(SearchGearView gearView) {
+        StringWriter sw = new StringWriter();
+        try {
+            JAXBContext jaxbCtx = JAXBContext.newInstance(SearchGearView.class);
+            Marshaller marshaller = jaxbCtx.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
+            marshaller.marshal(gearView, sw);
+        } catch (JAXBException ex) {
+            Logger.getLogger(XMLUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sw.toString();
+    }
+    
+    public static String getXSLFileAsString(String path) {
+        FileInputStream is = null;
+        InputStreamReader ir = null;
+        BufferedReader br = null;
+        
+        try {
+            is = new FileInputStream(path);
+            ir = new InputStreamReader(is, "UTF-8");
+            br = new BufferedReader(ir);
+            String line = "";
+            StringBuilder sb = new StringBuilder("");
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            return sb.toString();
+        } catch (IOException ex) {
+            Logger.getLogger(XMLUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(XMLUtil.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ir != null) {
+                try {
+                    ir.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(XMLUtil.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(XMLUtil.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return "";
     }
     
 }

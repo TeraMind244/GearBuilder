@@ -17,12 +17,13 @@
         <servlet-class>servlet.BuilderServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CrawlerServlet</servlet-name>
-        <servlet-class>servlet.CrawlerServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AdminServlet</servlet-name>
-        <servlet-class>servlet.AdminServlet</servlet-class>
+        <servlet-name>ServletAdaptor</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>restful.services.ApplicationConfig</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
@@ -37,12 +38,8 @@
         <url-pattern>/build</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CrawlerServlet</servlet-name>
-        <url-pattern>/crawl</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AdminServlet</servlet-name>
-        <url-pattern>/admin</url-pattern>
+        <servlet-name>ServletAdaptor</servlet-name>
+        <url-pattern>/resource/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

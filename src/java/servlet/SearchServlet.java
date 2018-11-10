@@ -1,14 +1,7 @@
 
 package servlet;
 
-import gear.GearDAO;
-import gear.GearFilter;
-import gear.SearchGearView;
-import generated.gear.Gear;
 import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,36 +17,8 @@ public class SearchServlet extends HttpServlet {
         
         String url = PathLookup.SEARCH_PAGE;
         
-        String nameParam = request.getParameter("txtGearName");
-        String typeParam = request.getParameter("ddlType");
-        String sortByParam = request.getParameter("ddlSortBy");
-        String pageParam = request.getParameter("page");
-        
-        try {
-            String name = nameParam == null ? "" : nameParam.trim();
-            String type = typeParam == null ? "all" : typeParam;
-            String sortBy = sortByParam == null ? "" : sortByParam;
-            int page = pageParam == null ? 0 : Integer.parseInt(pageParam.trim());
-
-            GearFilter filter = new GearFilter(name, type, sortBy);
-            
-            if (page >= 0) {
-                GearDAO dao = new GearDAO();
-                SearchGearView gearsView = dao.getAllGear(filter, page);
-
-                if (gearsView.getGears() != null) {
-                    request.setAttribute("GEARS", gearsView.getGears().getGearList());
-                    request.setAttribute("GEARCOUNT", gearsView.getResultCount());
-                    request.setAttribute("PAGE", page);
-                    request.setAttribute("MAXPAGE", gearsView.getMaxPage());
-                }
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
-        }
+        RequestDispatcher rd = request.getRequestDispatcher(url);
+        rd.forward(request, response);
         
     }
 
