@@ -59,7 +59,7 @@
             </tr>
         </table>
 
-        <a href="builder.jsp" >Build bộ Gear của riêng bạn!</a>
+        <a href="build" >Build bộ Gear của riêng bạn!</a>
         
         <div id="gears"></div>
         <script type="text/javascript" src="js/search.js"></script>

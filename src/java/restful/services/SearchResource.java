@@ -2,13 +2,8 @@
 package restful.services;
 
 import gear.GearDAO;
-import gear.GearFilter;
-import gear.SearchGearView;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import gear.search.GearFilter;
+import gear.search.SearchGearView;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -40,10 +35,9 @@ public class SearchResource {
     public String getXml(@DefaultValue("") @QueryParam("txtGearName") String nameParam, 
             @DefaultValue("all") @QueryParam("ddlType") String type, 
             @DefaultValue("nameAsc") @QueryParam("ddlSortBy") String sortBy, 
-            @DefaultValue("0") @QueryParam("page") String pageParam) {
+            @DefaultValue("0") @QueryParam("page") int page) {
         try {
             String name = nameParam.trim();
-            int page = Integer.parseInt(pageParam.trim());
 
             GearFilter filter = new GearFilter(name, type, sortBy);
             
@@ -56,7 +50,7 @@ public class SearchResource {
         } catch (NumberFormatException ex) {
             Logger.getLogger(SearchResource.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "";
+        return "Error";
     }
     
     @Path("/xsl")

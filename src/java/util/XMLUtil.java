@@ -1,7 +1,8 @@
 
 package util;
 
-import gear.SearchGearView;
+import gear.builder.ListGearSet;
+import gear.search.SearchGearView;
 import generated.gear.Gear;
 import java.io.BufferedReader;
 import java.io.File;
@@ -67,6 +68,20 @@ public class XMLUtil {
             marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
             marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
             marshaller.marshal(gearView, sw);
+        } catch (JAXBException ex) {
+            Logger.getLogger(XMLUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sw.toString();
+    }
+    
+    public static String marshall(ListGearSet listGearSet) {
+        StringWriter sw = new StringWriter();
+        try {
+            JAXBContext jaxbCtx = JAXBContext.newInstance(ListGearSet.class);
+            Marshaller marshaller = jaxbCtx.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
+            marshaller.marshal(listGearSet, sw);
         } catch (JAXBException ex) {
             Logger.getLogger(XMLUtil.class.getName()).log(Level.SEVERE, null, ex);
         }

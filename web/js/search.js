@@ -1,12 +1,10 @@
-const loading = document.getElementById("loading");
+const searchServiceUrl = "/GearBuilder/resource/search/";
 
 const txtGearName = document.getElementById("txtGearName");
 const ddlType = document.getElementById("ddlType");
 const ddlSortBy = document.getElementById("ddlSortBy");
 
 const gears = document.getElementById("gears");
-
-const searchServiceUrl = "/GearBuilder/resource/search/";
 
 (function() {
     doAjaxGetXML("GET", searchServiceUrl + "xsl?xslFilePath=xsl/searchGearView.xsl", function (returnedXML) {
@@ -20,11 +18,14 @@ function getGears(params) {
     gears.innerHTML = loadingGif;
     var paramsUrl = getSearchUrl(params);
     doAjaxGetXML("GET", searchServiceUrl + paramsUrl, function (returnedXML) {
-        xml = returnedXML;
-        gears.innerHTML = "";
-        gears.appendChild(transform(xml, xsl));
-        var url = new URL(window.location.href);
-        pushState(domain + paramsUrl);
+        if (returnedXML === "Error" || !returnedXML) {
+            gears.innerHTML = "<h2>Không tìm thấy Gear nào!</h2>";
+        } else {
+            xml = returnedXML;
+            gears.innerHTML = "";
+            gears.appendChild(transform(xml, xsl));
+            pushState(domain + paramsUrl);
+        }
     });
 }
 

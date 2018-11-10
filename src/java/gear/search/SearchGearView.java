@@ -1,5 +1,5 @@
 
-package gear;
+package gear.search;
 
 import generated.gear.Gear;
 import java.io.ByteArrayInputStream;

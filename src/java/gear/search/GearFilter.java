@@ -1,5 +1,5 @@
 
-package gear;
+package gear.search;
 
 public class GearFilter {
     

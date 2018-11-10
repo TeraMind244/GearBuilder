@@ -1,12 +1,66 @@
-const advancedSearchDiv = document.getElementById("advanced-search--div");
-const txtMoney = document.getElementsByName("txtMoney")[0];
+const buildServiceUrl = "/GearBuilder/resource/build/";
 
-const txtMousePercentage = document.getElementsByName("txtMousePercentage")[0];
-const txtKeyboardPercentage = document.getElementsByName("txtKeyboardPercentage")[0];
-const txtPadPercentage = document.getElementsByName("txtPadPercentage")[0];
-const txtHeadsetPercentage = document.getElementsByName("txtHeadsetPercentage")[0];
+const txtMoney = document.getElementById("txtMoney");
+
+const txtMousePercentage = document.getElementById("txtMousePercentage");
+const txtKeyboardPercentage = document.getElementById("txtKeyboardPercentage");
+const txtPadPercentage = document.getElementById("txtPadPercentage");
+const txtHeadsetPercentage = document.getElementById("txtHeadsetPercentage");
+
+const btnBuild = document.getElementById("btnBuild");
+
+const advancedSearchDiv = document.getElementById("advanced-search--div");
 
 const errorMsg = document.getElementById("error-msg");
+
+const gearSets = document.getElementById("gearSets");
+
+(function() {
+    doAjaxGetXML("GET", buildServiceUrl + "xsl?xslFilePath=xsl/listGearSet.xsl", function (returnedXML) {
+        xsl = returnedXML;
+    });
+    setParamsForInput();
+})();
+
+function getGearSets(params) {
+    btnBuild.disabled = true;
+    gearSets.innerHTML = loadingGif;
+    var paramsUrl = getSearchUrl(params);
+    doAjaxGetXML("GET", buildServiceUrl + paramsUrl, function (returnedXML) {
+        if (returnedXML === "Error" || !returnedXML) {
+            gearSets.innerHTML = "<h2>Không tìm thấy Set Gear phù hợp!</h2>";
+        } else {
+            xml = returnedXML;
+            gearSets.innerHTML = "";
+            gearSets.appendChild(transform(xml, xsl));
+            pushState(domain + paramsUrl);
+        }
+        btnBuild.disabled = false;
+    });
+}
+
+function getSearchUrl(params) {
+    var param = "?";
+    if (!params) {
+        params = buildData;
+    }
+    if (params.txtMoney) {
+        param += "txtMoney=" + params.txtMoney;
+    }
+    if (params.txtMousePercentage) {
+        param += "&txtMousePercentage=" + params.txtMousePercentage;
+    }
+    if (params.txtKeyboardPercentage) {
+        param += "&txtKeyboardPercentage=" + params.txtKeyboardPercentage;
+    }
+    if (params.txtPadPercentage) {
+        param += "&txtPadPercentage=" + params.txtPadPercentage;
+    }
+    if (params.txtHeadsetPercentage) {
+        param += "&txtHeadsetPercentage=" + params.txtHeadsetPercentage;
+    }
+    return "build" + param;
+}
 
 function toggleAdvancedSearch() {
     if (advancedSearchDiv.style.display === "none") {
@@ -23,7 +77,7 @@ function validateInput() {
     
     var total = mousePercentage + keyboardPercentage + padPercentage;
     
-    if (total > 100) {
+    if (total >= 100) {
         errorMsg.innerHTML = "Phần trăm vượt quá 100%!";
         return;
     }
@@ -40,41 +94,37 @@ function validateInput() {
 }
 
 function getAllParam() {
-    var param = "?";
-    var mousePercentage = parseInt(txtMousePercentage.value);
-    var keyboardPercentage = parseInt(txtKeyboardPercentage.value);
-    var padPercentage = parseInt(txtPadPercentage.value);
-    var headsetPercentage = parseInt(txtHeadsetPercentage.value);
-    
-    param += "txtMousePercentage=" + mousePercentage +
-            "&txtKeyboardPercentage=" + keyboardPercentage +
-            "&txtPadPercentage=" + padPercentage +
-            "&txtHeadsetPercentage=" + headsetPercentage;
-    
-    var money = parseInt(txtMoney.value);
-    
-    if (money) {
-        param += "&txtMoney=" + money;
-    } else {
-        money
-    }
-    
-    return param;
+    buildData = {
+        txtMoney: parseInt(txtMoney.value),
+        txtMousePercentage: parseInt(txtMousePercentage.value),
+        txtKeyboardPercentage: parseInt(txtKeyboardPercentage.value),
+        txtPadPercentage: parseInt(txtPadPercentage.value),
+        txtHeadsetPercentage: parseInt(txtHeadsetPercentage.value)
+    };
+    return buildData;
 }
 
-function buildGearSet(btn) {
-    btn.disabled = true;
+function buildGearSet() {
     var error = errorMsg.innerHTML;
     if (error) {
         return;
     } else {
         var params = getAllParam();
-        location.href = "/GearBuilder/build" + params;
+        getGearSets(params);
     }
 }
 
 function build() {
     if (event.keyCode === 13) {
-        buildGearSet(document.getElementById("btnBuild"));
+        buildGearSet();
     }
+}
+
+function setParamsForInput() {
+    txtMoney.value = buildData.txtMoney;
+    
+    txtMousePercentage.value = buildData.txtMousePercentage;
+    txtKeyboardPercentage.value = buildData.txtKeyboardPercentage;
+    txtPadPercentage.value = buildData.txtPadPercentage;
+    txtHeadsetPercentage.value = buildData.txtHeadsetPercentage;
 }

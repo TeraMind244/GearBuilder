@@ -47,6 +47,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>OrderServlet</welcome-file>
+        <welcome-file>search</welcome-file>
     </welcome-file-list>
 </web-app>
