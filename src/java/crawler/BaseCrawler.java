@@ -32,6 +32,7 @@ import util.HibernateUtil;
 public abstract class BaseCrawler implements Runnable {
     
     protected String url;
+    protected final String schemaFilePath = "web/schema/gear.xsd";
     private static ExecutorService pool;
     private static int THREAD_POOL_COUNT = 0;
     private final static Object LOCK = new Object();

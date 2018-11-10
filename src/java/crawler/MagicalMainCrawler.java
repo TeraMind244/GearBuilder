@@ -26,7 +26,6 @@ public class MagicalMainCrawler {
         }
         
         ExecutorService pool = BaseCrawler.getPool();
-        
         for (String link : ADayRoiConstant.ADayRoiLinks) {
             String[] urlAndType = link.split(";");
             Thread crawler = new Thread(new ADayRoiPageCrawler(urlAndType[0], urlAndType[1]));
@@ -42,7 +41,6 @@ public class MagicalMainCrawler {
             Thread crawler = new Thread(new PlayZonePageCrawler(urlAndType[0], urlAndType[1]));
             pool.execute(crawler);
         }
-        
     }
     
 }

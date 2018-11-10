@@ -132,4 +132,8 @@ public class CrawlerUtil {
         }
     }
     
+    public static String tokenizedUrl(String url) {
+        return url.trim().replaceAll("\\s", "%20");
+    }
+    
 }

@@ -17,6 +17,7 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import util.CrawlerUtil;
+import util.XMLUtil;
 import util.constant.ADayRoiConstant;
 
 public class ADayRoiCrawler extends BaseCrawler {
@@ -132,7 +133,9 @@ public class ADayRoiCrawler extends BaseCrawler {
                         if (price > 0) {
                             int hashStr = CrawlerUtil.hashingString(productUrl);
                             Gear gear = new Gear(hashStr, productName, source, productUrl, imgUrl, price, type);
-                            GearDAO.getInstance().saveGear(gear);
+                            if (XMLUtil.validateXMLBeforeSaveToDatabase(gear, schemaFilePath)) {
+                                GearDAO.getInstance().saveGear(gear);
+                            }
 //                            System.out.println("Save " + gear.getType() + ": " + gear.getGearName() + " - " + url);
 //                            System.out.println("Product{name: " + productName + ", imgUrl: " + imgUrl + ", productUrl: " + productUrl + ", price: " + price + "k}");
                         }
