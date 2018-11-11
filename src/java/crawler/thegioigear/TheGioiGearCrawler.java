@@ -2,6 +2,8 @@
 package crawler.thegioigear;
 
 import crawler.BaseCrawler;
+import crawler.BaseThread;
+import crawler.adayroi.ADayRoiCrawler;
 import gear.GearDAO;
 import gear.generated.Gear;
 import java.io.BufferedReader;
@@ -159,6 +161,15 @@ public class TheGioiGearCrawler extends BaseCrawler {
                     }
                 }
                 endTagMark--;
+            }
+            synchronized (BaseThread.getInstance()) {
+                while (BaseThread.isSuspended()) {
+                    try {
+                        BaseThread.getInstance().wait();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ADayRoiCrawler.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
         }
         System.out.println("Finish crawler: " + url);

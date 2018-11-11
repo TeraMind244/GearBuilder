@@ -2,6 +2,7 @@
 package restful.services;
 
 import crawler.BaseCrawler;
+import crawler.BaseThread;
 import crawler.adayroi.ADayRoiPageCrawler;
 import crawler.playzone.PlayZonePageCrawler;
 import crawler.thegioigear.TheGioiGearPageCrawler;
@@ -92,11 +93,26 @@ public class AdminResource {
             }
         }
         if (timeOut > 0) {
-            return "Crawlers're Finished!";
+            return "Crawlers're finished in " + (AppConstant.crawlerTimeout * 60 - timeOut / 1000) + " seconds!";
         } else {
             return "Error! Crawlers're timeout!";
         }
-        
+    }
+    
+    @Path("/pauseCrawler")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String pauseCrawler() {
+        BaseThread.setSuspended(true);
+        return "Paused!";
+    }
+    
+    @Path("/resumeCrawler")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String resumeCrawler() {
+        BaseThread.setSuspended(false);
+        return "Resumed!";
     }
 
 }

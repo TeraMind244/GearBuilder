@@ -27,6 +27,22 @@
                     <span id="startCrawlerMsg" style="color: red;" ></span>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <button id="btnPause" onclick="pauseCrawler(this)" disabled >Pause crawler!</button>
+                </td>
+                <td class="width-150">
+                    <span id="pauseCrawlerMsg" style="color: red;" ></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="btnResume" onclick="resumeCrawler(this)" disabled >Resume crawler!</button>
+                </td>
+                <td class="width-150">
+                    <span id="resumeCrawlerMsg" style="color: red;" ></span>
+                </td>
+            </tr>
         </table>
         
         <div id="loading-section"></div>
