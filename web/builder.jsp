@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Builder</title>
+        <title>Gear Builder - Builder</title>
         <link rel="stylesheet" href="css/search.css" />
         <script type="text/javascript" src="js/app.js"></script>
         <script>
@@ -22,13 +22,13 @@
     </head>
     <body>
         <h1>Gear Builder</h1>
-        <a href="search">Back to search page!</a>
+        <a href="search">Trở lại trang tìm kiếm!</a>
         <div id="search--div">
             Số tiền: <input class="width-50" type="number" id="txtMoney" onkeydown="build()" 
                             oninput="validateInput()" onchange="validateInput()" />,000 VND
             <button id="btnBuild" onclick="buildGearSet(this)" >Build</button>
             <br/>
-            <a href="#" onclick="toggleAdvancedSearch()" >Nâng cao</a>
+            <a href="javascript: void(0);" onclick="toggleAdvancedSearch()" >Nâng cao</a>
             <br/>
             <div id="advanced-search--div" style="display: none;">
                 <table>

@@ -15,15 +15,15 @@
             <h2>Không tìm thấy Set Gear phù hợp!</h2>
         </xsl:if>
         <xsl:if test="not ($itemCount = 0)">
-            <table border="1">
+            <table border="1" id="builder--table">
                 <thead>
                     <tr>
-                        <th>No.</th>
-                        <th>Mouse</th>
-                        <th>Keyboard</th>
-                        <th>Pad</th>
-                        <th>Headset</th>
-                        <th>Total</th>
+                        <th>Stt.</th>
+                        <th>Chuột</th>
+                        <th>Bàn Phím</th>
+                        <th>Lót chuột</th>
+                        <th>Tai nghe</th>
+                        <th>Tổng tiền</th>
                     </tr>
                 </thead>
                 <tbody>

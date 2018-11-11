@@ -18,23 +18,37 @@
             <h2>Không tìm thấy Gear nào!</h2>
         </xsl:if>
         <xsl:if test="$itemCount > 0">
-            <h2>Tìm thấy <xsl:value-of select="//*[local-name()='ResultCount']"/> Gear</h2>
-            <div class="pagination--div" >
-                <xsl:if test="$currentPage = 0" >
-                    <button id="btnPrev" onclick="gotoPage(currentPage - 1)" disabled="disabled" >&lt;</button>
-                </xsl:if>
-                <xsl:if test="not ($currentPage = 0)" >
-                    <button id="btnPrev" onclick="gotoPage(currentPage - 1)" >&lt;</button>
-                </xsl:if>
+            <div id="header--div">
+                <span id="found-text">Tìm thấy <xsl:value-of select="//*[local-name()='ResultCount']"/> Gear</span>
+                <span class="pagination--div" >
+                    <xsl:if test="$currentPage = 0" >
+                        <button id="btnFirst" disabled="disabled" >&lt;&lt;</button>
+                        <button id="btnPrev" disabled="disabled" >&lt;</button>
+                    </xsl:if>
+                    <xsl:if test="not ($currentPage = 0)" >
+                        <button id="btnFirst" onclick="gotoPage(0)" >&lt;&lt;</button>
+                        <button id="btnPrev" onclick="gotoPage(currentPage - 1)" >&lt;</button>
+                        <button onclick="gotoPage(currentPage - 1)" >
+                            <xsl:value-of select="$currentPage"/>
+                        </button>
+                    </xsl:if>
 
-                <button id="btnCurrent"><xsl:value-of select="$currentPage + 1"/></button>
+                    <button id="btnCurrent">
+                        <xsl:value-of select="$currentPage + 1"/>
+                    </button>
 
-                <xsl:if test="$currentPage = $maxPage" >
-                    <button id="btnNext" onclick="gotoPage(currentPage + 1)" disabled="disabled" >&gt;</button>
-                </xsl:if>
-                <xsl:if test="not ($currentPage = $maxPage)" >
-                    <button id="btnNext" onclick="gotoPage(currentPage + 1)" >&gt;</button>
-                </xsl:if>
+                    <xsl:if test="$currentPage = $maxPage" >
+                        <button id="btnNext" onclick="gotoPage(currentPage + 1)" disabled="disabled" >&gt;</button>
+                        <button id="btnLast" disabled="disabled" >&gt;&gt;</button>
+                    </xsl:if>
+                    <xsl:if test="not ($currentPage = $maxPage)" >
+                        <button onclick="gotoPage(currentPage + 1)" >
+                            <xsl:value-of select="$currentPage + 2"/>
+                        </button>
+                        <button id="btnNext" onclick="gotoPage(currentPage + 1)" >&gt;</button>
+                        <button id="btnLast" onclick="gotoPage({$maxPage})" >&gt;&gt;</button>
+                    </xsl:if>
+                </span>
             </div>
             <div id="gearList">
                 <xsl:for-each select="//*[local-name()='GearList']/*[local-name()='Gear']">
@@ -58,19 +72,31 @@
             </div>
             <div class="pagination--div" >
                 <xsl:if test="$currentPage = 0" >
-                    <button id="btnPrev" onclick="gotoPage(currentPage - 1)" disabled="disabled" >&lt;</button>
+                    <button id="btnFirst" disabled="disabled" >&lt;&lt;</button>
+                    <button id="btnPrev" disabled="disabled" >&lt;</button>
                 </xsl:if>
                 <xsl:if test="not ($currentPage = 0)" >
+                    <button id="btnFirst" onclick="gotoPage(0)" >&lt;&lt;</button>
                     <button id="btnPrev" onclick="gotoPage(currentPage - 1)" >&lt;</button>
+                    <button onclick="gotoPage(currentPage - 1)" >
+                        <xsl:value-of select="$currentPage"/>
+                    </button>
                 </xsl:if>
 
-                <button id="btnCurrent"><xsl:value-of select="$currentPage + 1"/></button>
+                <button id="btnCurrent">
+                    <xsl:value-of select="$currentPage + 1"/>
+                </button>
 
                 <xsl:if test="$currentPage = $maxPage" >
                     <button id="btnNext" onclick="gotoPage(currentPage + 1)" disabled="disabled" >&gt;</button>
+                    <button id="btnLast" disabled="disabled" >&gt;&gt;</button>
                 </xsl:if>
                 <xsl:if test="not ($currentPage = $maxPage)" >
+                    <button onclick="gotoPage(currentPage + 1)" >
+                        <xsl:value-of select="$currentPage + 2"/>
+                    </button>
                     <button id="btnNext" onclick="gotoPage(currentPage + 1)" >&gt;</button>
+                    <button id="btnLast" onclick="gotoPage({$maxPage})" >&gt;&gt;</button>
                 </xsl:if>
             </div>
         </xsl:if>

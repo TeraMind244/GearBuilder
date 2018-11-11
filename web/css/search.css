@@ -8,12 +8,15 @@
 
 .width-50 {
     width: 50px;
+    padding: 5px;
+    font-size: 16px;
 }
 
 body {
     padding-left: 25px;
     padding-right: 25px;
     background-color: #F0F2F5;
+    font-family: Arial;
 }
 
 button {
@@ -21,6 +24,7 @@ button {
     background: green;
     color: white;
     border: 0;
+    font-size: 16px;
 }
 
 .pagination--div button {
@@ -35,10 +39,6 @@ a {
     width: 40px;
 }
 
-h2 {
-    width: 100%;
-}
-
 #gearList {
     display: flex;
     flex-direction: row;
@@ -50,6 +50,7 @@ h2 {
     max-width: 23%;
     flex-grow: 1;
     padding: 10px;
+    border: 1px solid #ccc;
 }
 
 .gear--div .gear-price--div {
@@ -60,4 +61,72 @@ h2 {
 
 .gear--div img {
     width: 100%;
+}
+
+#builder--table {
+    background-color: #FFFFFF;
+    border-collapse: collapse;
+}
+
+#builder--table td,th {
+    border: 1px solid #DDDDDD;
+    padding: 8px;
+}
+
+#builder--table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#builder--table td {
+    padding: 10px;
+}
+
+#loading img {
+    max-width: 200px;
+}
+
+#loading {
+    background-color: transparent;
+}
+
+button {
+    cursor: pointer;
+}
+
+button#btnCurrent {
+    background-color: #F11921;
+}
+
+button[disabled] {
+    pointer-events: none;
+    background-color: #DDDDDD;
+    cursor: not-allowed;
+}
+
+#gearList {
+    background-color: white;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#header--div {
+    display: inline-block;
+    width: 100%;
+}
+
+#found-text {
+    float: left;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+
+.pagination--div {
+    float: right;
+}
+
+#gears {
+    padding-bottom: 50px;
 }
