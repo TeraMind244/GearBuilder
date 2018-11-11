@@ -8,30 +8,30 @@ function getUrlParam(param) {
 
 function doAjaxGetText(method, url, callback) {
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
+    xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             callback(this.responseText);
-       }
+        }
     };
     xhttp.open(method, url, true);
-    xhttp.send(); 
+    xhttp.send();
 }
 
 function doAjaxGetXML(method, url, callback) {
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
+    xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             callback(this.responseXML);
-       }
+        }
     };
     xhttp.open(method, url, true);
-    xhttp.send(); 
+    xhttp.send();
 }
 
 function transform(xml, xsl) {
     var xslt = new XSLTProcessor();
     xslt.importStylesheet(xsl);
-    
+
     return xslt.transformToFragment(xml, document);
 }
 

@@ -6,11 +6,11 @@ and open the template in the editor.
 -->
 
 <xsd:schema version="1.0"
-           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-           xmlns:gear="http://www.netbeans.org/schema/Gear"
-           elementFormDefault="qualified"
-           targetNamespace="http://www.netbeans.org/schema/SearchGearView"
-           xmlns="http://www.netbeans.org/schema/SearchGearView">
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:gear="http://www.netbeans.org/schema/Gear"
+            elementFormDefault="qualified"
+            targetNamespace="http://www.netbeans.org/schema/SearchGearView"
+            xmlns="http://www.netbeans.org/schema/SearchGearView">
 
     <xsd:import namespace="http://www.netbeans.org/schema/Gear" schemaLocation="../schema/gear.xsd" />
     

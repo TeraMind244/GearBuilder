@@ -6,13 +6,13 @@ const ddlSortBy = document.getElementById("ddlSortBy");
 
 const gears = document.getElementById("gears");
 
-(function() {
+(function () {
     doAjaxGetXML("GET", searchServiceUrl + "xsl?xslFilePath=xsl/searchGearView.xsl", function (returnedXML) {
         xsl = returnedXML;
         getGears(null);
     });
     setParamsForInput();
-    window.onpopstate = function() {
+    window.onpopstate = function () {
         var params = {
             txtGearName: getUrlParam("txtGearName") ? getUrlParam("txtGearName") : "",
             ddlType: getUrlParam("ddlType") ? getUrlParam("ddlType") : "all",
@@ -42,7 +42,7 @@ function getSearchUrl(params) {
     var param = "?page=" + currentPage;
     if (!params) {
         params = searchData;
-    } 
+    }
     if (params.txtGearName) {
         param += "&txtGearName=" + params.txtGearName;
     }

@@ -26,7 +26,7 @@ import javax.xml.stream.events.XMLEvent;
 import util.constant.AppConstant;
 
 
-@XmlRootElement(name = "searchGearView:SearchGearView")
+@XmlRootElement(name = "SearchGearView")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SearchGearView", propOrder = {
     "gears",
@@ -36,25 +36,25 @@ import util.constant.AppConstant;
 })
 public class SearchGearView implements Serializable {
     
-    @XmlAttribute(name="xmlns")
-    private String xmlns = "http://www.netbeans.org/schema/Gear";
+//    @XmlAttribute(name="xmlns")
+//    private String xmlns = "http://www.netbeans.org/schema/Gear";
+//    
+//    @XmlAttribute(name="xmlns:searchGearView")
+//    private String searchGearView = "http://www.netbeans.org/schema/SearchGearView";
+//    
+//    @XmlAttribute(name="xmlns:xsi")
+//    private String xsi = "http://www.w3.org/2001/XMLSchema-instance";
+//    
+//    @XmlAttribute(name="xsi:schemaLocation")
+//    private String schemaLocation = "http://www.netbeans.org/schema/SearchGearView web/schema/searchGearView.xsd";
     
-    @XmlAttribute(name="xmlns:searchGearView")
-    private String searchGearView = "http://www.netbeans.org/schema/SearchGearView";
-    
-    @XmlAttribute(name="xmlns:xsi")
-    private String xsi = "http://www.w3.org/2001/XMLSchema-instance";
-    
-    @XmlAttribute(name="xsi:schemaLocation")
-    private String schemaLocation = "http://www.netbeans.org/schema/SearchGearView web/schema/searchGearView.xsd";
-    
-    @XmlElement(name="searchGearView:GearList")
+    @XmlElement(name="GearList")
     private GearList gears;
     
-    @XmlElement(name="searchGearView:CurrentPage")
+    @XmlElement(name="CurrentPage")
     private int currentPage; // zero based
     
-    @XmlElement(name="searchGearView:ResultCount")
+    @XmlElement(name="ResultCount")
     private int resultCount;
 
     public SearchGearView() {
@@ -92,7 +92,7 @@ public class SearchGearView implements Serializable {
         this.resultCount = resultCount;
     }
     
-    @XmlElement(name="searchGearView:MaxPage")
+    @XmlElement(name="MaxPage")
     public int getMaxPage() {
         if (AppConstant.pageSize == 0) {
             return 0;
@@ -103,50 +103,50 @@ public class SearchGearView implements Serializable {
         return (resultCount - 1) / AppConstant.pageSize;
     }
     
-    public static void main(String[] args) {
-        try {
-            Gear gear1 = new Gear(3103778, "Razer FireFly", "thegioigear.com", 
-                    "https://thegioigear.com/collections/lot-chuot/products/firefly", 
-                    "//hstatic.net/809/1000037809/1/2015/9-18/brand-product-page-hero_firefly_06-01_large.png", 
-                    1590000, "other");
-            Gear gear2 = new Gear(3396323, "Bàn phím cơ Corsair K95 Platinum RGB MX Speed CH-9127014-NA", "adayroi.com", 
-                    "https://www.adayroi.com/ban-phim-co-corsair-k95-platinum-rgb-mx-speed-ch-9127014-na-p-1349286?offer=1349286_EEC", 
-                    "https://media-static-adayroi.cdn.vccloud.vn/240_240/80/h32/h28/14814317051934.jpg", 
-                    4990000, "ban-phim");
-            
-            List<Gear> gears = new ArrayList<>();
-            gears.add(gear1);
-            gears.add(gear2);
-            
-            GearList gearList = new GearList(gears);
-            
-            SearchGearView gear = new SearchGearView(gearList, 5, 347);
-            
-            JAXBContext jaxb = JAXBContext.newInstance(SearchGearView.class);
-            Marshaller marshaller = jaxb.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
-            
-            StringWriter sw = new StringWriter();
-            marshaller.marshal(gear, sw);
-            
-            XMLEventReader eventReader = parseStringToXMLEventReader(sw.toString());
-            
-            while (eventReader.hasNext()) {
-                XMLEvent event = (XMLEvent) eventReader.next();
-                System.out.println(event);
-            }
-        } catch (JAXBException | UnsupportedEncodingException | XMLStreamException ex) {
-            Logger.getLogger(Gear.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public static XMLEventReader parseStringToXMLEventReader(String xmlSection)
-            throws UnsupportedEncodingException, XMLStreamException {
-        byte[] byteArray = xmlSection.getBytes("UTF-8");
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArray);
-        XMLInputFactory factory = XMLInputFactory.newInstance();
-        XMLEventReader reader = factory.createXMLEventReader(inputStream);
-        return reader;
-    }
+//    public static void main(String[] args) {
+//        try {
+//            Gear gear1 = new Gear(3103778, "Razer FireFly", "thegioigear.com", 
+//                    "https://thegioigear.com/collections/lot-chuot/products/firefly", 
+//                    "//hstatic.net/809/1000037809/1/2015/9-18/brand-product-page-hero_firefly_06-01_large.png", 
+//                    1590000, "other");
+//            Gear gear2 = new Gear(3396323, "Bàn phím cơ Corsair K95 Platinum RGB MX Speed CH-9127014-NA", "adayroi.com", 
+//                    "https://www.adayroi.com/ban-phim-co-corsair-k95-platinum-rgb-mx-speed-ch-9127014-na-p-1349286?offer=1349286_EEC", 
+//                    "https://media-static-adayroi.cdn.vccloud.vn/240_240/80/h32/h28/14814317051934.jpg", 
+//                    4990000, "ban-phim");
+//            
+//            List<Gear> gears = new ArrayList<>();
+//            gears.add(gear1);
+//            gears.add(gear2);
+//            
+//            GearList gearList = new GearList(gears);
+//            
+//            SearchGearView gear = new SearchGearView(gearList, 5, 347);
+//            
+//            JAXBContext jaxb = JAXBContext.newInstance(SearchGearView.class);
+//            Marshaller marshaller = jaxb.createMarshaller();
+//            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
+//            
+//            StringWriter sw = new StringWriter();
+//            marshaller.marshal(gear, sw);
+//            
+//            XMLEventReader eventReader = parseStringToXMLEventReader(sw.toString());
+//            
+//            while (eventReader.hasNext()) {
+//                XMLEvent event = (XMLEvent) eventReader.next();
+//                System.out.println(event);
+//            }
+//        } catch (JAXBException | UnsupportedEncodingException | XMLStreamException ex) {
+//            Logger.getLogger(Gear.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+//    
+//    public static XMLEventReader parseStringToXMLEventReader(String xmlSection)
+//            throws UnsupportedEncodingException, XMLStreamException {
+//        byte[] byteArray = xmlSection.getBytes("UTF-8");
+//        ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArray);
+//        XMLInputFactory factory = XMLInputFactory.newInstance();
+//        XMLEventReader reader = factory.createXMLEventReader(inputStream);
+//        return reader;
+//    }
     
 }

@@ -15,7 +15,7 @@ const errorMsg = document.getElementById("error-msg");
 
 const gearSets = document.getElementById("gearSets");
 
-(function() {
+(function () {
     doAjaxGetXML("GET", buildServiceUrl + "xsl?xslFilePath=xsl/listGearSet.xsl", function (returnedXML) {
         xsl = returnedXML;
         if (getUrlParam("txtMoney")) {
@@ -23,7 +23,7 @@ const gearSets = document.getElementById("gearSets");
         }
     });
     setParamsForInput();
-    window.onhashchange = function() {
+    window.onhashchange = function () {
         getGearSets();
     };
 })();
@@ -80,21 +80,21 @@ function validateInput() {
     var mousePercentage = parseInt(txtMousePercentage.value);
     var keyboardPercentage = parseInt(txtKeyboardPercentage.value);
     var padPercentage = parseInt(txtPadPercentage.value);
-    
+
     var total = mousePercentage + keyboardPercentage + padPercentage;
-    
+
     if (total >= 100) {
         errorMsg.innerHTML = "Phần trăm vượt quá 100%!";
         return;
     }
-    
+
     var money = parseInt(txtMoney.value.trim()) * 1000;
-    
+
     if (!money || money <= 0) {
         errorMsg.innerHTML = "Giá tiền không hợp lệ!";
         return;
     }
-    
+
     errorMsg.innerHTML = "";
     txtHeadsetPercentage.value = 100 - total;
 }
@@ -132,7 +132,7 @@ function build() {
 
 function setParamsForInput() {
     txtMoney.value = buildData.txtMoney / 1000;
-    
+
     txtMousePercentage.value = buildData.txtMousePercentage;
     txtKeyboardPercentage.value = buildData.txtKeyboardPercentage;
     txtPadPercentage.value = buildData.txtPadPercentage;

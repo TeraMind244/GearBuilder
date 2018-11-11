@@ -10,6 +10,7 @@ import gear.GearDAO;
 import handler.CrawlerDomRef;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -116,6 +117,25 @@ public class AdminResource {
     public String resumeCrawler() {
         BaseThread.getInstance().resumeThread();
         return "Resumed!";
+    }
+    
+    @Path("/stopCrawler")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String stopCrawler() {
+        ExecutorService pool = BaseCrawler.getPool();
+        pool.shutdown();
+        try {
+            if (!pool.awaitTermination(10, TimeUnit.SECONDS)) {
+                pool.shutdownNow();
+                if (!pool.awaitTermination(10, TimeUnit.SECONDS)) {
+                    return "Stopped fail!";
+                }
+            }
+        } catch (InterruptedException ex) {
+            pool.shutdownNow();
+        }
+        return "Stoped!";
     }
 
 }

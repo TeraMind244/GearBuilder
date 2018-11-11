@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
 <xsd:schema version="1.0"
-           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-           elementFormDefault="qualified"
-           targetNamespace="http://www.netbeans.org/schema/Gear"
-           xmlns="http://www.netbeans.org/schema/Gear">
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified"
+            targetNamespace="http://www.netbeans.org/schema/Gear"
+            xmlns="http://www.netbeans.org/schema/Gear">
 
     <xsd:element name="Gear" type="GearType" />
     
@@ -14,7 +14,7 @@
             <xsd:element name="Source" type="xsd:string" />
             <xsd:element name="GearUrl" type="UrlType" />
             <xsd:element name="ImgUrl" type="UrlType" />
-            <xsd:element name="Price" type="xsd:string" />
+            <xsd:element name="Price" type="PriceType" />
             <xsd:element name="Type" type="xsd:string" />
         </xsd:sequence>
         <xsd:attribute name="HashStr" type="xsd:positiveInteger" />
@@ -24,6 +24,13 @@
         <xsd:restriction base="xsd:token">
             <xsd:pattern value="((https?:)?(\/\/)?(w{2,3}\.)?)?[\w\-@:%.\+~#=]{2,255}\.[a-z]{2,6}[^\s]*"/>
             <!--<xsd:pattern value="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"/>-->
+            <xsd:minLength value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:simpleType name="PriceType">
+        <xsd:restriction base="xsd:token">
+            <xsd:pattern value="([0-9]{1,3})?([\.,][0-9]{3})*[₫đ ]"/>
             <xsd:minLength value="1"/>
         </xsd:restriction>
     </xsd:simpleType>

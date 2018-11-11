@@ -1,5 +1,6 @@
 const buildServiceUrl = "/GearBuilder/resource/admin/";
 
+const btnStart = document.getElementById("btnStart");
 const btnPause = document.getElementById("btnPause");
 const btnResume = document.getElementById("btnResume");
 
