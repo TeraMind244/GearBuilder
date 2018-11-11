@@ -172,10 +172,10 @@ public abstract class BaseCrawler implements Runnable {
             THREAD_POOL_COUNT--;
             if (THREAD_POOL_COUNT == 0) {
                 System.out.println("Finish all crawler!!!");
-                Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-                if (session.isOpen()) {
-                    session.close();
-                }
+//                Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//                if (session.isOpen()) {
+//                    session.close();
+//                }
 //                SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 //                if(!sessionFactory.isClosed()){
 //                    sessionFactory.close();

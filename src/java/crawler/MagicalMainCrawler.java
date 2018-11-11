@@ -25,6 +25,7 @@ public class MagicalMainCrawler {
             Logger.getLogger(MagicalMainCrawler.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        BaseCrawler.setSchemaFilePath("web/schema/gear.xsd");
         ExecutorService pool = BaseCrawler.getPool();
         for (String link : ADayRoiConstant.ADayRoiLinks) {
             String[] urlAndType = link.split(";");

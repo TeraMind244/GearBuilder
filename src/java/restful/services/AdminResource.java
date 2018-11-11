@@ -6,6 +6,7 @@ import crawler.BaseThread;
 import crawler.adayroi.ADayRoiPageCrawler;
 import crawler.playzone.PlayZonePageCrawler;
 import crawler.thegioigear.TheGioiGearPageCrawler;
+import gear.GearDAO;
 import handler.CrawlerDomRef;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -63,6 +64,7 @@ public class AdminResource {
         
         String realPath = servletContext.getRealPath("/");
         BaseCrawler.setSchemaFilePath(realPath + "schema/gear.xsd");
+        GearDAO.getInstance().refreshSession();
         
         ExecutorService pool = BaseCrawler.getPool();
         for (String link : ADayRoiConstant.ADayRoiLinks) {

@@ -1,11 +1,10 @@
 
 package gear;
 
+import gear.generated.Gear;
 import gear.search.GearFilter;
 import gear.search.GearList;
 import gear.search.SearchGearView;
-import gear.generated.Gear;
-import util.HibernateUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.logging.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import util.HibernateUtil;
 import util.constant.AppConstant;
 
 public class GearDAO implements Serializable {
@@ -35,10 +35,15 @@ public class GearDAO implements Serializable {
         return instance;
     }
     
-    public synchronized void saveGear(Gear newGear) {
+    public void refreshSession() {
         if (!session.isOpen()) {
             session = HibernateUtil.getSessionFactory().openSession();
         }
+        session.flush();
+        session.clear();
+    }
+    
+    public synchronized void saveGear(Gear newGear) {
         Gear gear = getGearByHashStr(newGear.getHashStr());
         if (gear == null) {
             addGear(newGear);

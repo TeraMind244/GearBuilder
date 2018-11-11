@@ -38,5 +38,6 @@ public class AppListener implements ServletContextListener {
         if(!sessionFactory.isClosed()){
             sessionFactory.close();
         }
+        HibernateUtil.stopConnectionProvider();
     }
 }
