@@ -18,7 +18,7 @@ import util.constant.AppConstant;
 
 public class GearDAO implements Serializable {
     
-    private Session session;
+    private static Session session;
     private static GearDAO instance;
     private final static Object LOCK = new Object();
 
@@ -36,6 +36,9 @@ public class GearDAO implements Serializable {
     }
     
     public synchronized void saveGear(Gear newGear) {
+        if (!session.isOpen()) {
+            session = HibernateUtil.getSessionFactory().openSession();
+        }
         Gear gear = getGearByHashStr(newGear.getHashStr());
         if (gear == null) {
             addGear(newGear);

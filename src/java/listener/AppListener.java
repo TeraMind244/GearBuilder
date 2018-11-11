@@ -10,6 +10,7 @@ import javax.servlet.ServletContextListener;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.xml.sax.SAXException;
 import util.HibernateUtil;
 
@@ -30,8 +31,12 @@ public class AppListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        if (!session.isOpen()) {
+        if (session.isOpen()) {
             session.close();
+        }
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        if(!sessionFactory.isClosed()){
+            sessionFactory.close();
         }
     }
 }

@@ -12,6 +12,15 @@ const gears = document.getElementById("gears");
         getGears(null);
     });
     setParamsForInput();
+    window.onpopstate = function() {
+        var params = {
+            txtGearName: getUrlParam("txtGearName") ? getUrlParam("txtGearName") : "",
+            ddlType: getUrlParam("ddlType") ? getUrlParam("ddlType") : "all",
+            ddlSortBy: getUrlParam("ddlSortBy") ? getUrlParam("ddlSortBy") : ""
+        };
+        currentPage = getUrlParam("page") ? parseInt(getUrlParam("page")) : 0;
+        getGears(params);
+    };
 })();
 
 function getGears(params) {

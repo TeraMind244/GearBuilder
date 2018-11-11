@@ -111,7 +111,7 @@ public class AdminResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String resumeCrawler() {
-        BaseThread.setSuspended(false);
+        BaseThread.getInstance().resumeThread();
         return "Resumed!";
     }
 

@@ -5,6 +5,8 @@ const btnResume = document.getElementById("btnResume");
 
 const dataRefMsg = document.getElementById("dataRefMsg");
 const startCrawlerMsg = document.getElementById("startCrawlerMsg");
+const pauseCrawlerMsg = document.getElementById("pauseCrawlerMsg");
+const resumeCrawlerMsg = document.getElementById("resumeCrawlerMsg");
 
 const loadingSection = document.getElementById("loading-section");
 
@@ -27,6 +29,7 @@ function startCrawler(btn) {
     doAjaxGetText("GET", buildServiceUrl + "startCrawler", function (reponsedText) {
         btn.disabled = false;
         startCrawlerMsg.innerHTML = reponsedText;
+        pauseCrawlerMsg.innerHTML = "";
         loadingSection.innerHTML = "";
         btnPause.disabled = true;
     });
@@ -37,19 +40,20 @@ function pauseCrawler(btn) {
     loadingSection.innerHTML = loadingGif;
     doAjaxGetText("GET", buildServiceUrl + "pauseCrawler", function (reponsedText) {
         btn.disabled = true;
-        startCrawlerMsg.innerHTML = reponsedText;
+        pauseCrawlerMsg.innerHTML = reponsedText;
+        resumeCrawlerMsg.innerHTML = "";
         loadingSection.innerHTML = "";
         btnResume.disabled = false;
     });
 }
 
 function resumeCrawler(btn) {
-    startCrawlerMsg.innerHTML = "Processing!";
     loadingSection.innerHTML = loadingGif;
     doAjaxGetText("GET", buildServiceUrl + "resumeCrawler", function (reponsedText) {
         btn.disabled = true;
-        startCrawlerMsg.innerHTML = reponsedText;
-        loadingSection.innerHTML = "";
+        resumeCrawlerMsg.innerHTML = reponsedText;
+        pauseCrawlerMsg.innerHTML = "";
+        startCrawlerMsg.innerHTML = "Processing!";
         btnPause.disabled = false;
     });
 }

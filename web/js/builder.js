@@ -23,6 +23,9 @@ const gearSets = document.getElementById("gearSets");
         }
     });
     setParamsForInput();
+    window.onhashchange = function() {
+        getGearSets();
+    };
 })();
 
 function getGearSets(params) {
@@ -43,7 +46,7 @@ function getGearSets(params) {
 }
 
 function getSearchUrl(params) {
-    var param = "?";
+    var param = "#";
     if (!params) {
         params = buildData;
     }

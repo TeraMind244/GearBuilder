@@ -49,7 +49,7 @@ public abstract class BaseCrawler implements Runnable {
 
     public synchronized static ExecutorService getPool() {
         if (pool == null) {
-            pool = Executors.newFixedThreadPool(8);
+            pool = Executors.newFixedThreadPool(AppConstant.threadPool);
         }
         return pool;
     }
@@ -177,7 +177,6 @@ public abstract class BaseCrawler implements Runnable {
                     sessionFactory.close();
                 }
                 isAllFinished = true;
-//                shutdownAndAwaitTermination(pool);
             }
         }
     }
