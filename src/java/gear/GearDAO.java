@@ -4,7 +4,7 @@ package gear;
 import gear.search.GearFilter;
 import gear.search.GearList;
 import gear.search.SearchGearView;
-import generated.gear.Gear;
+import gear.generated.Gear;
 import util.HibernateUtil;
 import java.io.Serializable;
 import java.util.ArrayList;

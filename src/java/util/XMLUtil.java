@@ -3,7 +3,7 @@ package util;
 
 import gear.builder.ListGearSet;
 import gear.search.SearchGearView;
-import generated.gear.Gear;
+import gear.generated.Gear;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;

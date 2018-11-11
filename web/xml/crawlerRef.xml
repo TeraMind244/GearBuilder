@@ -57,4 +57,10 @@
     <pageSize>
         20
     </pageSize>
+    <threadPool>
+        8
+    </threadPool>
+    <crawlerTimeout>
+        5
+    </crawlerTimeout>
 </crawlerRef>

@@ -4,7 +4,7 @@ package crawler.playzone;
 import crawler.BaseCrawler;
 import crawler.adayroi.ADayRoiCrawler;
 import gear.GearDAO;
-import generated.gear.Gear;
+import gear.generated.Gear;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

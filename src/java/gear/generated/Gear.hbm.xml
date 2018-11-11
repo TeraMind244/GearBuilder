@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 27, 2018 10:26:27 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="GearBuilder" name="gear.generated.Gear" optimistic-lock="version" schema="dbo" table="Gear">
+    <id name="hashStr" type="int">
+      <column name="HashStr"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="gearName" type="string">
+      <column length="150" name="GearName"/>
+    </property>
+    <property name="source" type="string">
+      <column length="50" name="Source"/>
+    </property>
+    <property name="gearUrl" type="string">
+      <column length="250" name="GearUrl"/>
+    </property>
+    <property name="imgUrl" type="string">
+      <column length="250" name="ImgUrl"/>
+    </property>
+    <property name="price" type="java.lang.Integer">
+      <column name="Price"/>
+    </property>
+    <property name="type" type="string">
+      <column length="50" name="Type"/>
+    </property>
+  </class>
+</hibernate-mapping>

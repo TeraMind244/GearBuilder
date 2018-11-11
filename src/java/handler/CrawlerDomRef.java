@@ -23,23 +23,23 @@ import util.constant.TheGioiGearConstant;
 
 public class CrawlerDomRef {
     
-    public static String getTextWithXpath(XPath xpath, Node node, String expression)
+    private static String getTextWithXpath(XPath xpath, Node node, String expression)
             throws XPathExpressionException {
         String text = (String) xpath.evaluate(expression, node, XPathConstants.STRING);
         return text == null ? "" : text.trim();
     }
     
-    public static Node getNodeWithXpath(XPath xpath, Node node, String expression) 
+    private static Node getNodeWithXpath(XPath xpath, Node node, String expression) 
             throws XPathExpressionException {
         return (Node) xpath.evaluate(expression, node, XPathConstants.NODE);
     }
     
-    public static NodeList getNodeListWithXpath(XPath xpath, Node node, String expression) 
+    private static NodeList getNodeListWithXpath(XPath xpath, Node node, String expression) 
             throws XPathExpressionException {
         return (NodeList) xpath.evaluate(expression, node, XPathConstants.NODESET);
     }
     
-    public static void getCrawlerLinks(XPath xpath, Node doc)
+    private static void getCrawlerLinks(XPath xpath, Node doc)
             throws XPathExpressionException {
         NodeList aDayRoiLinks = getNodeListWithXpath(xpath, doc, "//page[@name='adayroi']//link");
         for (int i = 0; i < aDayRoiLinks.getLength(); i++) {
@@ -61,7 +61,7 @@ public class CrawlerDomRef {
         }
     }
     
-    public static void getCrawlerMarks(XPath xpath, Node doc)
+    private static void getCrawlerMarks(XPath xpath, Node doc)
             throws XPathExpressionException {
         ADayRoiConstant.ADayRoiPageCrawlerStartMark = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/lastPageCrawler/startMark");
         ADayRoiConstant.ADayRoiPageCrawlerEndMark = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/lastPageCrawler/endMark");
@@ -87,17 +87,23 @@ public class CrawlerDomRef {
         PlayZoneConstant.PlayZoneCrawlerStartFragment = getTextWithXpath(xpath, doc, "//page[@name='playzone']/dataCrawler/startFragment");
     }
     
-    public static void getPageSize(XPath xpath, Node doc)
+    private static void getPageSize(XPath xpath, Node doc)
             throws XPathExpressionException {
         String pageSizeStr = getTextWithXpath(xpath, doc, "//pageSize");
         AppConstant.pageSize = Integer.parseInt(pageSizeStr);
     }
     
-    public static void getDomains(XPath xpath, Node doc)
+    private static void getDomains(XPath xpath, Node doc)
             throws XPathExpressionException {
         ADayRoiConstant.ADayRoiDomain = getTextWithXpath(xpath, doc, "//page[@name='adayroi']/attribute::domain");
         TheGioiGearConstant.TheGioiGearDomain = getTextWithXpath(xpath, doc, "//page[@name='thegioigear']/attribute::domain");
         PlayZoneConstant.PlayZoneDomain = getTextWithXpath(xpath, doc, "//page[@name='playzone']/attribute::domain");
+    }
+    
+    private static void getCrawlerReference(XPath xpath, Node doc) 
+            throws XPathExpressionException {
+        AppConstant.threadPool = Integer.parseInt(getTextWithXpath(xpath, doc, "//threadPool"));
+        AppConstant.crawlerTimeout = Integer.parseInt(getTextWithXpath(xpath, doc, "//crawlerTimeout"));
     }
     
     public static void readXMLRefFile(String refFilePath)
@@ -114,24 +120,8 @@ public class CrawlerDomRef {
         getCrawlerMarks(xpath, doc);
         getPageSize(xpath, doc);
         getDomains(xpath, doc);
-    }
-    
-    public static void main(String[] args) {
-        try {
-            readXMLRefFile("web/xml/crawlerRef.xml");
-            System.out.println(AppConstant.pageSize);
-            for (String link : ADayRoiConstant.ADayRoiLinks) {
-                System.out.println(link);
-            }
-            for (String link : TheGioiGearConstant.TheGioiGearLinks) {
-                System.out.println(link);
-            }
-            for (String link : PlayZoneConstant.PlayZoneLinks) {
-                System.out.println(link);
-            }
-        } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException ex) {
-            Logger.getLogger(CrawlerDomRef.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        getCrawlerReference(xpath, doc);
+        AppConstant.isRead = true;
     }
     
 }

@@ -1,7 +1,7 @@
 
 package gear.search;
 
-import generated.gear.Gear;
+import gear.generated.Gear;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.io.StringWriter;

@@ -9,4 +9,5 @@ public class PathLookup {
     public static final String BUILDER_PAGE = "builder.jsp";
     public static final String CRAWLER_PAGE = "crawler.jsp";
     public static final String CRAWLER_SERVLET = "admin";
+    public static final String ADMIN_PAGE = "admin.jsp";
 }

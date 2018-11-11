@@ -1,5 +1,5 @@
 
-package generated.gear;
+package gear.generated;
 
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;

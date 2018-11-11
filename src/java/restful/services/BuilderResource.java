@@ -4,7 +4,7 @@ package restful.services;
 import gear.GearDAO;
 import gear.builder.GearSet;
 import gear.builder.ListGearSet;
-import generated.gear.Gear;
+import gear.generated.Gear;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

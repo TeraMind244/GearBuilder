@@ -28,17 +28,19 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import org.hibernate.SessionFactory;
 import util.HibernateUtil;
+import util.constant.AppConstant;
 
 public abstract class BaseCrawler implements Runnable {
     
     protected String url;
-    protected final String schemaFilePath = "web/schema/gear.xsd";
+    protected static String schemaFilePath;
     private static ExecutorService pool;
     private static int THREAD_POOL_COUNT = 0;
     private final static Object LOCK = new Object();
+    private static boolean isAllFinished = false;
     
     static {
-        pool = Executors.newFixedThreadPool(8);
+        pool = Executors.newFixedThreadPool(AppConstant.threadPool);
     }
     
     public BaseCrawler(String url) {
@@ -50,6 +52,10 @@ public abstract class BaseCrawler implements Runnable {
             pool = Executors.newFixedThreadPool(8);
         }
         return pool;
+    }
+
+    public static void setSchemaFilePath(String schemaFilePath) {
+        BaseCrawler.schemaFilePath = schemaFilePath;
     }
     
     protected BufferedReader getBufferReaderForURL(String urlString)
@@ -150,6 +156,7 @@ public abstract class BaseCrawler implements Runnable {
     
     public void createThread() {
         synchronized (LOCK) {
+            isAllFinished = false;
             THREAD_POOL_COUNT++;
         }
     }
@@ -169,7 +176,8 @@ public abstract class BaseCrawler implements Runnable {
                 if(!sessionFactory.isClosed()){
                     sessionFactory.close();
                 }
-                shutdownAndAwaitTermination(pool);
+                isAllFinished = true;
+//                shutdownAndAwaitTermination(pool);
             }
         }
     }
@@ -187,6 +195,10 @@ public abstract class BaseCrawler implements Runnable {
             pool.shutdownNow();
             Thread.currentThread().interrupt();
         }
+    }
+
+    public static boolean isAllFinished() {
+        return isAllFinished;
     }
     
 }
