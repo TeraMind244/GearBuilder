@@ -10,7 +10,7 @@
         <script type="text/javascript" src="js/app.js"></script>
         <script>
             var buildData = {
-                txtMoney: getUrlParam("txtMoney") ? parseInt(getUrlParam("txtMoney")) : 0,
+                txtMoney: getUrlParam("txtMoney") ? parseInt(getUrlParam("txtMoney")) : 1000000,
                 txtMousePercentage: getUrlParam("txtMousePercentage") ? parseInt(getUrlParam("txtMousePercentage")) : 35,
                 txtKeyboardPercentage: getUrlParam("txtKeyboardPercentage") ? parseInt(getUrlParam("txtKeyboardPercentage")) : 35,
                 txtPadPercentage: getUrlParam("txtPadPercentage") ? parseInt(getUrlParam("txtPadPercentage")) : 5,
@@ -24,7 +24,8 @@
         <h1>Gear Builder</h1>
         <a href="search">Back to search page!</a>
         <div id="search--div">
-            Số tiền: <input type="number" id="txtMoney" onkeydown="build()" oninput="validateInput()" onchange="validateInput()" />
+            Số tiền: <input class="width-50" type="number" id="txtMoney" onkeydown="build()" 
+                            oninput="validateInput()" onchange="validateInput()" />,000 VND
             <button id="btnBuild" onclick="buildGearSet(this)" >Build</button>
             <br/>
             <a href="#" onclick="toggleAdvancedSearch()" >Nâng cao</a>

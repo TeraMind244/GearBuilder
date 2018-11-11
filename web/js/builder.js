@@ -46,7 +46,7 @@ function getGearSets(params) {
 }
 
 function getSearchUrl(params) {
-    var param = "#";
+    var param = "?";
     if (!params) {
         params = buildData;
     }
@@ -88,7 +88,7 @@ function validateInput() {
         return;
     }
     
-    var money = parseInt(txtMoney.value.trim());
+    var money = parseInt(txtMoney.value.trim()) * 1000;
     
     if (!money || money <= 0) {
         errorMsg.innerHTML = "Giá tiền không hợp lệ!";
@@ -101,7 +101,7 @@ function validateInput() {
 
 function getAllParam() {
     buildData = {
-        txtMoney: parseInt(txtMoney.value),
+        txtMoney: parseInt(txtMoney.value) * 1000,
         txtMousePercentage: parseInt(txtMousePercentage.value),
         txtKeyboardPercentage: parseInt(txtKeyboardPercentage.value),
         txtPadPercentage: parseInt(txtPadPercentage.value),
@@ -127,7 +127,7 @@ function build() {
 }
 
 function setParamsForInput() {
-    txtMoney.value = buildData.txtMoney;
+    txtMoney.value = buildData.txtMoney / 1000;
     
     txtMousePercentage.value = buildData.txtMousePercentage;
     txtKeyboardPercentage.value = buildData.txtKeyboardPercentage;

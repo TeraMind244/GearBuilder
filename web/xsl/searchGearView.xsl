@@ -27,7 +27,7 @@
                     <button id="btnPrev" onclick="gotoPage(currentPage - 1)" >&lt;</button>
                 </xsl:if>
 
-                <button id="btnCurrent"><xsl:value-of select="$currentPage"/></button>
+                <button id="btnCurrent"><xsl:value-of select="$currentPage + 1"/></button>
 
                 <xsl:if test="$currentPage = $maxPage" >
                     <button id="btnNext" onclick="gotoPage(currentPage + 1)" disabled="disabled" >&gt;</button>
@@ -36,38 +36,26 @@
                     <button id="btnNext" onclick="gotoPage(currentPage + 1)" >&gt;</button>
                 </xsl:if>
             </div>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Type</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <xsl:for-each select="//*[local-name()='GearList']/*[local-name()='Gear']">
-                        <tr>
-                            <td>
-                                <a href="{*[local-name()='GearUrl']/text()}" target="_blank">
-                                    <img src="{*[local-name()='ImgUrl']/text()}" class="width-150" />
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{*[local-name()='GearUrl']/text()}" target="_blank">
-                                    <xsl:value-of select="*[local-name()='GearName']/text()"/>
-                                </a>
-                            </td>
-                            <td>
-                                <xsl:value-of select="*[local-name()='Price']/text()"/>
-                            </td>
-                            <td>
-                                <xsl:value-of select="*[local-name()='Type']/text()"/>
-                            </td>
-                        </tr>
-                    </xsl:for-each>
-                </tbody>
-            </table>
+            <div id="gearList">
+                <xsl:for-each select="//*[local-name()='GearList']/*[local-name()='Gear']">
+                    <div class="gear--div">
+                        <a href="{*[local-name()='GearUrl']/text()}" target="_blank">
+                            <div class="gear-img--div">
+                                <img class="gear--img" src="{*[local-name()='ImgUrl']/text()}" />
+                            </div>
+                            <div class="gear-name--div">
+                                <xsl:value-of select="*[local-name()='GearName']/text()"/>
+                            </div>
+                        </a>
+                        <div class="gear-price--div">
+                            <xsl:value-of select="*[local-name()='Price']/text()"/>
+                        </div>
+                        <div class="gear-type--div">
+                            <xsl:value-of select="*[local-name()='Type']/text()"/>
+                        </div>
+                    </div>
+                </xsl:for-each>
+            </div>
             <div class="pagination--div" >
                 <xsl:if test="$currentPage = 0" >
                     <button id="btnPrev" onclick="gotoPage(currentPage - 1)" disabled="disabled" >&lt;</button>
@@ -76,7 +64,7 @@
                     <button id="btnPrev" onclick="gotoPage(currentPage - 1)" >&lt;</button>
                 </xsl:if>
 
-                <button id="btnCurrent"><xsl:value-of select="$currentPage"/></button>
+                <button id="btnCurrent"><xsl:value-of select="$currentPage + 1"/></button>
 
                 <xsl:if test="$currentPage = $maxPage" >
                     <button id="btnNext" onclick="gotoPage(currentPage + 1)" disabled="disabled" >&gt;</button>

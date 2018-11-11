@@ -6,8 +6,25 @@
     width: 200px;
 }
 
+.width-50 {
+    width: 50px;
+}
+
 body {
-    padding-left: 50px;
+    padding-left: 25px;
+    padding-right: 25px;
+    background-color: #F0F2F5;
+}
+
+button {
+    padding: 10px;
+    background: green;
+    color: white;
+    border: 0;
+}
+
+.pagination--div button {
+    margin-right: 5px;
 }
 
 a {
@@ -16,4 +33,31 @@ a {
 
 .percentage--input {
     width: 40px;
+}
+
+h2 {
+    width: 100%;
+}
+
+#gearList {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.gear--div {
+    max-width: 23%;
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.gear--div .gear-price--div {
+    max-width: 23%;
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.gear--div img {
+    width: 100%;
 }
