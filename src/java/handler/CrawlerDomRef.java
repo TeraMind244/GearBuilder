@@ -3,8 +3,6 @@ package handler;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,11 +25,6 @@ public class CrawlerDomRef {
             throws XPathExpressionException {
         String text = (String) xpath.evaluate(expression, node, XPathConstants.STRING);
         return text == null ? "" : text.trim();
-    }
-    
-    private static Node getNodeWithXpath(XPath xpath, Node node, String expression) 
-            throws XPathExpressionException {
-        return (Node) xpath.evaluate(expression, node, XPathConstants.NODE);
     }
     
     private static NodeList getNodeListWithXpath(XPath xpath, Node node, String expression) 
@@ -89,11 +82,8 @@ public class CrawlerDomRef {
     
     private static void getAppSetting(XPath xpath, Node doc)
             throws XPathExpressionException {
-        String pageSizeStr = getTextWithXpath(xpath, doc, "//pageSize");
-        AppConstant.pageSize = Integer.parseInt(pageSizeStr);
-        
-        String builderItems = getTextWithXpath(xpath, doc, "//builderItems");
-        AppConstant.builderItems = Integer.parseInt(builderItems);
+        AppConstant.pageSize = Integer.parseInt(getTextWithXpath(xpath, doc, "//pageSize"));
+        AppConstant.builderItems = Integer.parseInt(getTextWithXpath(xpath, doc, "//builderItems"));
     }
     
     private static void getDomains(XPath xpath, Node doc)

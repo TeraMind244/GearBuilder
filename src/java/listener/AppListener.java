@@ -1,6 +1,7 @@
 
 package listener;
 
+import crawler.BaseCrawler;
 import handler.CrawlerDomRef;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -39,5 +40,7 @@ public class AppListener implements ServletContextListener {
             sessionFactory.close();
         }
         HibernateUtil.stopConnectionProvider();
+        
+        BaseCrawler.shutdownAndAwaitTermination();
     }
 }

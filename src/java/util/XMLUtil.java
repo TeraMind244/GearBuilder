@@ -26,7 +26,7 @@ import org.xml.sax.SAXException;
 
 public class XMLUtil {
     
-    public static boolean validateXMLBeforeSaveToDatabase(Gear gear, String schemaPath) {
+    public static boolean validateWithSchema(Gear gear, String schemaPath) {
         try {
             String xml = marshall(gear);
             
@@ -106,26 +106,18 @@ public class XMLUtil {
         } catch (IOException ex) {
             Logger.getLogger(XMLUtil.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            if (br != null) {
-                try {
+            try {
+                if (br != null) {
                     br.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(XMLUtil.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            if (ir != null) {
-                try {
+                if (ir != null) {
                     ir.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(XMLUtil.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            if (is != null) {
-                try {
+                if (is != null) {
                     is.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(XMLUtil.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } catch (IOException ex) {
+                Logger.getLogger(XMLUtil.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return "";

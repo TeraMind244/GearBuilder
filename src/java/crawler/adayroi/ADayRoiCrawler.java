@@ -131,10 +131,12 @@ public class ADayRoiCrawler extends BaseCrawler {
                 
                 if ("div".equals(tagName)) {
                     if (endTagMark == productStartMark) {
-                        int hashStr = CrawlerUtil.hashingString(productUrl);
-                        Gear gear = new Gear(hashStr, productName, source, productUrl, imgUrl, price, type);
-                        if (XMLUtil.validateXMLBeforeSaveToDatabase(gear, schemaFilePath)) {
-                            GearDAO.getInstance().saveGear(gear);
+                        if (price > 0) {
+                            int hashStr = CrawlerUtil.hashingString(productUrl);
+                            Gear gear = new Gear(hashStr, productName, source, productUrl, imgUrl, price, type);
+                            if (XMLUtil.validateWithSchema(gear, schemaFilePath)) {
+                                GearDAO.getInstance().saveGear(gear);
+                            }
                         }
                         productStartMark = 0;
                         productUrl = "";

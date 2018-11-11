@@ -25,7 +25,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
 import util.constant.AppConstant;
 
-
 @XmlRootElement(name = "SearchGearView")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SearchGearView", propOrder = {
@@ -35,18 +34,6 @@ import util.constant.AppConstant;
     "maxPage",
 })
 public class SearchGearView implements Serializable {
-    
-//    @XmlAttribute(name="xmlns")
-//    private String xmlns = "http://www.netbeans.org/schema/Gear";
-//    
-//    @XmlAttribute(name="xmlns:searchGearView")
-//    private String searchGearView = "http://www.netbeans.org/schema/SearchGearView";
-//    
-//    @XmlAttribute(name="xmlns:xsi")
-//    private String xsi = "http://www.w3.org/2001/XMLSchema-instance";
-//    
-//    @XmlAttribute(name="xsi:schemaLocation")
-//    private String schemaLocation = "http://www.netbeans.org/schema/SearchGearView web/schema/searchGearView.xsd";
     
     @XmlElement(name="GearList")
     private GearList gears;

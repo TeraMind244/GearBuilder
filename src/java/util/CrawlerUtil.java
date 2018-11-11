@@ -3,27 +3,6 @@ package util;
 
 public class CrawlerUtil {
     
-//    public static int computeMatchingDensity(String a, String b) {
-//        int n = a.length();
-//        int m = b.length();
-//        int dp[][] = new int[n + 1][m + 1];
-//        
-//        for (int i = 0; i < n; i++) {
-//            for (int j = 0; j < m; j++) {
-//                if (a.charAt(i) == b.charAt(j)) {
-//                    dp[i + 1][j + 1] = dp[i][j] + 1;
-//                } else {
-//                    dp[i + 1][j + 1] = Math.max(dp[i + 1][j], dp[i][j + 1]);
-//                }
-//            }
-//        }
-//        return dp[n][m];
-//    }
-    
-//    public static double computePercentageMatchingDesity(String a, String b) {
-//        return computeMatchingDensity(a, b) * 100.0 / Math.min(a.length(), b.length());
-//    }
-    
     public static int hashingString(String content) {
         int mod = 1000000004;
         int base = 44449;
@@ -70,12 +49,6 @@ public class CrawlerUtil {
             return 0;
         }
         return Integer.parseInt(newStr.toString());
-    }
-    
-    public static String getImgUrlFromStyle(String styleStr) {
-        String backgroundStr = "background:url(";
-        String importantStr = ") !important";
-        return styleStr.substring(styleStr.indexOf(backgroundStr) + backgroundStr.length(), styleStr.indexOf(importantStr));
     }
     
     public static int getPage(String url, String pagePrefix) {
@@ -135,5 +108,26 @@ public class CrawlerUtil {
     public static String tokenizedUrl(String url) {
         return url.trim().replaceAll("\\s", "%20");
     }
+    
+//    public static int computeMatchingDensity(String a, String b) {
+//        int n = a.length();
+//        int m = b.length();
+//        int dp[][] = new int[n + 1][m + 1];
+//        
+//        for (int i = 0; i < n; i++) {
+//            for (int j = 0; j < m; j++) {
+//                if (a.charAt(i) == b.charAt(j)) {
+//                    dp[i + 1][j + 1] = dp[i][j] + 1;
+//                } else {
+//                    dp[i + 1][j + 1] = Math.max(dp[i + 1][j], dp[i][j + 1]);
+//                }
+//            }
+//        }
+//        return dp[n][m];
+//    }
+    
+//    public static double computePercentageMatchingDesity(String a, String b) {
+//        return computeMatchingDensity(a, b) * 100.0 / Math.min(a.length(), b.length());
+//    }
     
 }

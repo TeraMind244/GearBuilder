@@ -13,6 +13,7 @@ public class BuilderServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String url = PathLookup.BUILDER_PAGE;
         
         RequestDispatcher rd = request.getRequestDispatcher(url);

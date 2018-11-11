@@ -130,7 +130,7 @@ public class PlayZoneCrawler extends BaseCrawler {
                         if (price > 0) {
                             int hashStr = CrawlerUtil.hashingString(productUrl);
                             Gear gear = new Gear(hashStr, productName, source, productUrl, imgUrl, price, type);
-                            if (XMLUtil.validateXMLBeforeSaveToDatabase(gear, schemaFilePath)) {
+                            if (XMLUtil.validateWithSchema(gear, schemaFilePath)) {
                                 GearDAO.getInstance().saveGear(gear);
                             }
 //                            GearDAO.getInstance().saveGear(gear);
