@@ -9,10 +9,6 @@
         <servlet-class>servlet.SearchServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>OrderServlet</servlet-name>
-        <servlet-class>servlet.OrderServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>BuilderServlet</servlet-name>
         <servlet-class>servlet.BuilderServlet</servlet-class>
     </servlet>
@@ -32,10 +28,6 @@
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/search</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>OrderServlet</servlet-name>
-        <url-pattern>/OrderServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BuilderServlet</servlet-name>
