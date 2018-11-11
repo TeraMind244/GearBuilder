@@ -18,6 +18,9 @@ const gearSets = document.getElementById("gearSets");
 (function() {
     doAjaxGetXML("GET", buildServiceUrl + "xsl?xslFilePath=xsl/listGearSet.xsl", function (returnedXML) {
         xsl = returnedXML;
+        if (getUrlParam("txtMoney")) {
+            getGearSets(buildData);
+        }
     });
     setParamsForInput();
 })();
