@@ -53,6 +53,7 @@ function resumeCrawler(btn) {
         btn.disabled = true;
         resumeCrawlerMsg.innerHTML = reponsedText;
         pauseCrawlerMsg.innerHTML = "";
+        resumeCrawlerMsg.innerHTML = "";
         startCrawlerMsg.innerHTML = "Processing!";
         btnPause.disabled = false;
     });

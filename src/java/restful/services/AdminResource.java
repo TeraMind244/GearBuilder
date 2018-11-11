@@ -92,6 +92,7 @@ public class AdminResource {
                 return "Error! Something went wrong!";
             }
         }
+        BaseCrawler.setIsAllFinished(false);
         if (timeOut > 0) {
             return "Crawlers're finished in " + (AppConstant.crawlerTimeout * 60 - timeOut / 1000) + " seconds!";
         } else {

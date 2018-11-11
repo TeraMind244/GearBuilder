@@ -26,7 +26,7 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import org.hibernate.SessionFactory;
+import org.hibernate.Session;
 import util.HibernateUtil;
 import util.constant.AppConstant;
 
@@ -172,10 +172,14 @@ public abstract class BaseCrawler implements Runnable {
             THREAD_POOL_COUNT--;
             if (THREAD_POOL_COUNT == 0) {
                 System.out.println("Finish all crawler!!!");
-                SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-                if(!sessionFactory.isClosed()){
-                    sessionFactory.close();
+                Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+                if (session.isOpen()) {
+                    session.close();
                 }
+//                SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//                if(!sessionFactory.isClosed()){
+//                    sessionFactory.close();
+//                }
                 isAllFinished = true;
             }
         }
@@ -198,6 +202,10 @@ public abstract class BaseCrawler implements Runnable {
 
     public static boolean isAllFinished() {
         return isAllFinished;
+    }
+
+    public static void setIsAllFinished(boolean isAllFinished) {
+        BaseCrawler.isAllFinished = isAllFinished;
     }
     
 }
