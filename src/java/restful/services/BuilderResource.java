@@ -21,6 +21,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import util.XMLUtil;
+import util.constant.AppConstant;
 
 @Path("build")
 public class BuilderResource {
@@ -85,7 +86,7 @@ public class BuilderResource {
                             }
                         });
                         Collections.reverse(listGearSets);
-                        ListGearSet listGearSet = new ListGearSet(listGearSets.subList(0, 50));
+                        ListGearSet listGearSet = new ListGearSet(listGearSets.subList(0, AppConstant.builderItems));
 
                         return XMLUtil.marshall(listGearSet);
                     }

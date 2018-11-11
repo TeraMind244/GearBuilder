@@ -116,6 +116,10 @@ function buildGearSet() {
         return;
     } else {
         var params = getAllParam();
+        if (params.txtMoney > 4000000000) {
+            errorMsg.innerHTML = "Giá tiền quá lớn!";
+            return;
+        }
         getGearSets(params);
     }
 }

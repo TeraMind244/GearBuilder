@@ -7,9 +7,10 @@
 }
 
 .width-50 {
-    width: 50px;
+    width: 100px;
     padding: 5px;
     font-size: 16px;
+    text-align: right;
 }
 
 body {

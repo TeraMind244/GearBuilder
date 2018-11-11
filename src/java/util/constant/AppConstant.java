@@ -6,4 +6,5 @@ public class AppConstant {
     public static boolean isRead = false;
     public static int threadPool;
     public static int crawlerTimeout;
+    public static int builderItems;
 }

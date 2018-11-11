@@ -87,10 +87,13 @@ public class CrawlerDomRef {
         PlayZoneConstant.PlayZoneCrawlerStartFragment = getTextWithXpath(xpath, doc, "//page[@name='playzone']/dataCrawler/startFragment");
     }
     
-    private static void getPageSize(XPath xpath, Node doc)
+    private static void getAppSetting(XPath xpath, Node doc)
             throws XPathExpressionException {
         String pageSizeStr = getTextWithXpath(xpath, doc, "//pageSize");
         AppConstant.pageSize = Integer.parseInt(pageSizeStr);
+        
+        String builderItems = getTextWithXpath(xpath, doc, "//builderItems");
+        AppConstant.builderItems = Integer.parseInt(builderItems);
     }
     
     private static void getDomains(XPath xpath, Node doc)
@@ -118,7 +121,7 @@ public class CrawlerDomRef {
 
         getCrawlerLinks(xpath, doc);
         getCrawlerMarks(xpath, doc);
-        getPageSize(xpath, doc);
+        getAppSetting(xpath, doc);
         getDomains(xpath, doc);
         getCrawlerReference(xpath, doc);
         AppConstant.isRead = true;
